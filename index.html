@@ -3,1663 +3,465 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payments Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Payments Dashboard - Hannah Pet Hospital</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
-        
         body {
-            background-color: #f5f7fa;
-            color: #2c3e50;
-            padding: 20px;
-            min-height: 100vh;
+            background-color: #f8fafc;
+            color: #334155;
         }
-        
-        .container {
-            max-width: 1400px;
+        /* Header Navigation */
+        .header-nav {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-container {
+            max-width: 1200px;
             margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
         }
-        
-        /* Header */
-        .page-header {
-            margin-bottom: 30px;
-        }
-        
-        .page-title {
-            font-size: 32px;
+        .logo {
+            font-size: 20px;
             font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 10px;
+            color: #0f172a;
         }
-        
-        .page-subtitle {
-            font-size: 16px;
-            color: #7f8c8d;
-            line-height: 1.5;
-        }
-        
-        /* Dashboard Grid Layout */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-        
-        .dashboard-left {
+        .nav-links {
             display: flex;
-            flex-direction: column;
-            gap: 30px;
+            gap: 32px;
+            align-items: center;
         }
-        
-        .dashboard-right {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-        
-        /* Metrics Cards Grid */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-        }
-        
-        .metric-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s;
+        .nav-links a {
+            text-decoration: none;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 0;
             position: relative;
-            overflow: hidden;
+            transition: color 0.2s;
         }
-        
-        .metric-card:hover {
-            transform: translateY(-5px);
+        .nav-links a:hover {
+            color: #0f172a;
         }
-        
-        .metric-card::before {
+        .nav-links a.active {
+            color: #3b82f6;
+        }
+        .nav-links a.active::after {
             content: '';
             position: absolute;
-            top: 0;
+            bottom: -1px;
             left: 0;
             right: 0;
-            height: 4px;
+            height: 2px;
+            background: #3b82f6;
+            border-radius: 1px;
         }
-        
-        .metric-card.collected::before {
-            background: linear-gradient(90deg, #51b5e0 0%, #3498db 100%);
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
         }
-        
-        .metric-card.today::before {
-            background: linear-gradient(90deg, #1eb53a 0%, #27ae60 100%);
+        /* Header */
+        .page-header {
+            margin-bottom: 32px;
         }
-        
-        .metric-card.refunded-month::before {
-            background: linear-gradient(90deg, #ff6308 0%, #e67e22 100%);
+        .page-header h1 {
+            font-size: 30px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
         }
-        
-        .metric-card.refunded-today::before {
-            background: linear-gradient(90deg, #8c2633 0%, #c0392b 100%);
+        .page-header p {
+            color: #64748b;
+            font-size: 14px;
         }
-        
-        .metric-icon {
-            width: 50px;
-            height: 50px;
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .stat-card {
+            background: white;
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-            font-size: 22px;
-            color: white;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
         }
-        
-        .metric-card.collected .metric-icon {
-            background-color: #51b5e0;
-        }
-        
-        .metric-card.today .metric-icon {
-            background-color: #1eb53a;
-        }
-        
-        .metric-card.refunded-month .metric-icon {
-            background-color: #ff6308;
-        }
-        
-        .metric-card.refunded-today .metric-icon {
-            background-color: #8c2633;
-        }
-        
-        .metric-value {
+        .stat-card h2 {
             font-size: 28px;
             font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 5px;
+            color: #0f172a;
+            margin-bottom: 4px;
         }
-        
-        .metric-label {
+        .stat-card .label {
             font-size: 14px;
-            color: #7f8c8d;
-            font-weight: 500;
+            color: #64748b;
+            margin-bottom: 8px;
         }
-        
-        .metric-change {
-            font-size: 12px;
-            margin-top: 10px;
-            padding: 4px 8px;
-            border-radius: 12px;
-            display: inline-block;
-        }
-        
-        .metric-change.positive {
-            background-color: rgba(46, 204, 113, 0.1);
-            color: #27ae60;
-        }
-        
-        .metric-change.negative {
-            background-color: rgba(231, 76, 60, 0.1);
-            color: #c0392b;
-        }
-        
-        /* Fee Category Breakdown */
-        .fee-breakdown-section {
-            background-color: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-        
-        .section-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 10px;
+        .stat-card .trend {
+            font-size: 13px;
             display: flex;
             align-items: center;
+            gap: 4px;
         }
-        
-        .section-title i {
-            margin-right: 10px;
-            color: #51b5e0;
+        .trend.up {
+            color: #10b981;
         }
-        
-        .section-subtitle {
-            font-size: 14px;
-            color: #7f8c8d;
-            margin-bottom: 20px;
+        .trend.down {
+            color: #ef4444;
         }
-        
-        /* Category Cards */
-        .category-cards-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .category-card {
+        /* Fee Breakdown */
+        .fee-breakdown {
             background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            border-left: 5px solid;
-            transition: transform 0.2s, box-shadow 0.2s;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
         }
-        
-        .category-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-        }
-        
-        .category-card.all-fees {
-            border-left-color: #3b82f6;
-            background: linear-gradient(135deg, #eff6ff, #dbeafe);
-        }
-        
-        .category-card.monthly-support {
-            border-left-color: #10b981;
-            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-        }
-        
-        .category-card.membership {
-            border-left-color: #8b5cf6;
-            background: linear-gradient(135deg, #f5f3ff, #ede9fe);
-        }
-        
-        .category-card.pet-purchase {
-            border-left-color: #f59e0b;
-            background: linear-gradient(135deg, #fffbeb, #fef3c7);
-        }
-        
-        .category-card.products {
-            border-left-color: #ef4444;
-            background: linear-gradient(135deg, #fef2f2, #fee2e2);
-        }
-        
-        .category-header {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .category-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-        
-        .all-fees .category-icon { background-color: #3b82f6; }
-        .monthly-support .category-icon { background-color: #10b981; }
-        .membership .category-icon { background-color: #8b5cf6; }
-        .pet-purchase .category-icon { background-color: #f59e0b; }
-        .products .category-icon { background-color: #ef4444; }
-        
-        .category-header h4 {
-            margin: 0;
-            font-size: 16px;
-            font-weight: 600;
-            color: #1f2937;
-            line-height: 1.4;
-        }
-        
-        .category-description {
-            margin: 5px 0 0 0;
-            font-size: 12px;
-            color: #6b7280;
-            line-height: 1.4;
-        }
-        
-        .category-amount {
-            font-size: 24px;
-            font-weight: 700;
-            color: #1f2937;
-            text-align: right;
-            font-family: 'Courier New', monospace;
-        }
-        
-        /* Filter Section */
-        .filter-section {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-        
-        .filter-header {
-            margin-bottom: 20px;
-        }
-        
-        .filter-header h4 {
-            margin: 0;
+        .fee-breakdown h3 {
             font-size: 18px;
             font-weight: 600;
-            color: #2c3e50;
+            color: #0f172a;
+            margin-bottom: 20px;
         }
-        
-        .filter-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        .filter-group label {
-            font-size: 14px;
-            font-weight: 600;
-            color: #5d6d7e;
-        }
-        
-        .filter-select {
+        .fee-table {
             width: 100%;
-            padding: 10px 15px;
-            border: 1px solid #e0e6ed;
-            border-radius: 8px;
-            font-size: 14px;
-            background-color: white;
-            color: #2c3e50;
-            transition: border-color 0.2s;
+            border-collapse: collapse;
         }
-        
-        .filter-select:focus {
-            outline: none;
-            border-color: #51b5e0;
-            box-shadow: 0 0 0 3px rgba(81, 181, 224, 0.2);
-        }
-        
-        .date-range-group .date-inputs {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .date-inputs .date-input {
-            flex: 1;
-            padding: 10px 15px;
-            border: 1px solid #e0e6ed;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-        
-        .date-inputs span {
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-        
-        .filter-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #e0e6ed;
-        }
-        
-        .clear-btn {
-            padding: 10px 20px;
+        .fee-table th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #64748b;
+            border-bottom: 1px solid #e2e8f0;
             background: #f8fafc;
-            border: 1px solid #e0e6ed;
-            border-radius: 8px;
-            color: #5d6d7e;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
         }
-        
-        .clear-btn:hover {
-            background: #edf2f7;
+        .fee-table td {
+            padding: 16px;
+            border-bottom: 1px solid #f1f5f9;
         }
-        
-        .apply-btn {
-            flex: 1;
-            padding: 10px 20px;
-            background: #51b5e0;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: background-color 0.2s;
-        }
-        
-        .apply-btn:hover {
-            background: #3a9bc5;
-        }
-        
-        /* Payments Table */
-        .payments-table-container {
-            background-color: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-        
-        .table-header {
-            padding: 20px;
-            border-bottom: 1px solid #ecf0f1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .table-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        .table-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .export-btn {
-            background-color: #f8fafc;
-            color: #5d6d7e;
-            border: 1px solid #e0e6ed;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .export-btn:hover {
-            background-color: #edf2f7;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        thead {
-            background-color: #f8fafc;
-        }
-        
-        th {
-            padding: 16px 20px;
-            text-align: left;
-            font-weight: 600;
-            color: #5d6d7e;
-            font-size: 14px;
-            border-bottom: 1px solid #ecf0f1;
-        }
-        
-        td {
-            padding: 16px 20px;
-            border-bottom: 1px solid #ecf0f1;
-            font-size: 14px;
-        }
-        
-        tbody tr {
-            transition: background-color 0.2s;
-        }
-        
-        tbody tr:hover {
-            background-color: #f8fafc;
-        }
-        
-        /* Multi-Category Display */
-        .fee-categories-display {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        .fee-category-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 500;
-            max-width: fit-content;
-        }
-        
-        .fee-category-chip.support {
-            background-color: rgba(81, 181, 224, 0.1);
-            color: #2980b9;
-            border-left: 3px solid #51b5e0;
-        }
-        
-        .fee-category-chip.membership {
-            background-color: rgba(30, 181, 58, 0.1);
-            color: #27ae60;
-            border-left: 3px solid #1eb53a;
-        }
-        
-        .fee-category-chip.purchase {
-            background-color: rgba(255, 99, 8, 0.1);
-            color: #d35400;
-            border-left: 3px solid #ff6308;
-        }
-        
-        .fee-category-chip.products {
-            background-color: rgba(140, 38, 51, 0.1);
-            color: #c0392b;
-            border-left: 3px solid #8c2633;
-        }
-        
-        .fee-category-chip i {
-            font-size: 10px;
-        }
-        
-        .fee-amount-breakdown {
-            font-size: 11px;
-            color: #7f8c8d;
-            margin-top: 2px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .fee-breakdown-item {
-            display: flex;
-            align-items: center;
-            gap: 3px;
-        }
-        
-        /* Status Badges */
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            display: inline-block;
-        }
-        
-        .status-paid {
-            background-color: rgba(46, 204, 113, 0.1);
-            color: #27ae60;
-        }
-        
-        .status-pending {
-            background-color: rgba(241, 196, 15, 0.1);
-            color: #f39c12;
-        }
-        
-        .status-refunded {
-            background-color: rgba(231, 76, 60, 0.1);
-            color: #c0392b;
-        }
-        
-        .status-failed {
-            background-color: rgba(149, 165, 166, 0.1);
-            color: #7f8c8d;
-        }
-        
-        /* Method Badges */
-        .method-badge {
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-block;
-        }
-        
-        .method-credit {
-            background-color: rgba(52, 152, 219, 0.1);
-            color: #3498db;
-        }
-        
-        .method-debit {
-            background-color: rgba(155, 89, 182, 0.1);
-            color: #9b59b6;
-        }
-        
-        .method-cash {
-            background-color: rgba(46, 204, 113, 0.1);
-            color: #27ae60;
-        }
-        
-        .method-check {
-            background-color: rgba(230, 126, 34, 0.1);
-            color: #e67e22;
-        }
-        
-        .method-bank {
-            background-color: rgba(41, 128, 185, 0.1);
-            color: #2980b9;
-        }
-        
-        /* Actions Dropdown */
-        .actions-dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .actions-btn {
-            background-color: #f8fafc;
-            border: 1px solid #e0e6ed;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .actions-btn:hover {
-            background-color: #edf2f7;
-        }
-        
-        .actions-menu {
-            position: absolute;
-            right: 0;
-            top: 100%;
-            background-color: white;
-            border: 1px solid #e0e6ed;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            min-width: 150px;
-            z-index: 100;
-            display: none;
-        }
-        
-        .actions-dropdown:hover .actions-menu {
-            display: block;
-        }
-        
-        .action-item {
-            padding: 10px 15px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: background-color 0.2s;
-        }
-        
-        .action-item:hover {
-            background-color: #f8fafc;
-        }
-        
-        .action-item.view {
-            color: #3498db;
-        }
-        
-        .action-item.edit {
-            color: #f39c12;
-        }
-        
-        .action-item.refund {
-            color: #c0392b;
-        }
-        
-        .action-item.paynow {
-            color: #008000;
-        }
-        
-        .action-item.schedulepayment {
-            color: #c0392b;
-        }
-        
-        .action-item.paymentplan {
-            color: #f39c12;
-        }
-        
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-        
-        .pagination-info {
-            font-size: 14px;
-            color: #5d6d7e;
-        }
-        
-        .pagination-controls {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .pagination-btn {
-            padding: 8px 16px;
-            border: 1px solid #e0e6ed;
-            background-color: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-        
-        .pagination-btn:hover {
-            background-color: #f8fafc;
-        }
-        
-        .pagination-btn.active {
-            background-color: #51b5e0;
-            color: white;
-            border-color: #51b5e0;
-        }
-        
-        /* Payment Details Modal */
-        .payment-details-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .payment-details-content {
-            background-color: white;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 800px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            animation: modalSlideIn 0.3s ease-out;
-        }
-        
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .modal-header {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-            color: white;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .modal-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin: 0;
-        }
-        
-        .close-modal {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background-color 0.2s;
-        }
-        
-        .close-modal:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-        
-        .modal-body {
-            padding: 30px;
-        }
-        
-        .detail-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .detail-card {
-            background-color: #f8fafc;
-            border: 1px solid #e0e6ed;
-            border-radius: 8px;
-            padding: 20px;
-        }
-        
-        .detail-label {
-            font-size: 12px;
-            color: #7f8c8d;
-            text-transform: uppercase;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .detail-value {
-            font-size: 16px;
-            color: #2c3e50;
-            font-weight: 500;
-        }
-        
-        .line-items-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-        
-        .line-items-table th {
-            background-color: #f8fafc;
-            padding: 12px 15px;
-            text-align: left;
-            font-weight: 600;
-            color: #5d6d7e;
-            border-bottom: 1px solid #e0e6ed;
-        }
-        
-        .line-items-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #ecf0f1;
-        }
-        
-        .line-items-table tr:last-child td {
+        .fee-table tr:last-child td {
             border-bottom: none;
         }
-        
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
+        .fee-category {
+            font-weight: 600;
+            color: #0f172a;
         }
-        
-        @media (max-width: 768px) {
-            .metrics-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .filter-controls {
-                grid-template-columns: 1fr;
-            }
-            
-            .date-inputs {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .table-header {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
-            }
-            
-            table {
-                display: block;
-                overflow-x: auto;
-            }
-            
-            .payment-details-content {
-                width: 95%;
-            }
+        .fee-description {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        .fee-amount {
+            font-weight: 700;
+            color: #0f172a;
+            text-align: right;
+        }
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .filter-group label {
+            font-size: 14px;
+            color: #64748b;
+        }
+        select, input {
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+        }
+        /* Payments Table */
+        .payments-table-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+        .payments-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .payments-table th {
+            text-align: left;
+            padding: 16px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #64748b;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+        .payments-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .payments-table tr:last-child td {
+            border-bottom: none;
+        }
+        .status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .status.paid {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .status.refunded {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .method {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .actions {
+            color: #3b82f6;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        /* Pagination */
+        .pagination {
+            font-size: 14px;
+            color: #64748b;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1 class="page-title">Payments</h1>
-            <p class="page-subtitle">View, record, and reconcile all payments across our invoices</p>
-        </div>
-        
-        <!-- Dashboard Grid -->
-        <div class="dashboard-grid">
-            <!-- Left Column: Metrics & Payments Table -->
-            <div class="dashboard-left">
-                <!-- Metrics Cards -->
-                <div class="metrics-grid">
-                    <div class="metric-card collected">
-                        <div class="metric-icon">
-                            <i class="fas fa-money-bill-wave"></i>
-                        </div>
-                        <div class="metric-value">$48,250.00</div>
-                        <div class="metric-label">Collected This Month</div>
-                        <div class="metric-change positive">
-                            <i class="fas fa-arrow-up"></i> 12% from last month
-                        </div>
-                    </div>
-                    
-                    <div class="metric-card today">
-                        <div class="metric-icon">
-                            <i class="fas fa-calendar-day"></i>
-                        </div>
-                        <div class="metric-value">12</div>
-                        <div class="metric-label">Payments Today</div>
-                        <div class="metric-change positive">
-                            <i class="fas fa-arrow-up"></i> 2 more than yesterday
-                        </div>
-                    </div>
-                    
-                    <div class="metric-card refunded-month">
-                        <div class="metric-icon">
-                            <i class="fas fa-exchange-alt"></i>
-                        </div>
-                        <div class="metric-value">$1,240.00</div>
-                        <div class="metric-label">Refunded This Month</div>
-                        <div class="metric-change negative">
-                            <i class="fas fa-arrow-down"></i> 8% from last month
-                        </div>
-                    </div>
-                    
-                    <div class="metric-card refunded-today">
-                        <div class="metric-icon">
-                            <i class="fas fa-undo-alt"></i>
-                        </div>
-                        <div class="metric-value">$320.00</div>
-                        <div class="metric-label">Refunded Today</div>
-                        <div class="metric-change positive">
-                            <i class="fas fa-arrow-up"></i> $120 today
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Payments Table -->
-                <div class="payments-table-container">
-                    <div class="table-header">
-                        <div class="table-title">Recent Payments</div>
-                        <div class="table-actions">
-                            <button class="export-btn">
-                                <i class="fas fa-download"></i> Export CSV
-                            </button>
-                            <button class="export-btn">
-                                <i class="fas fa-print"></i> Print
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Invoice #</th>
-                                <th>Member Name</th>
-                                <th>Fee Categories</th>
-                                <th>Amount</th>
-                                <th>Method</th>
-                                <th>Status</th>
-                                <th>Reference</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Example 1: Francesca Ferrucci - Monthly Support + Pet Purchase -->
-                            <tr>
-                                <td>Jan 15, 2026</td>
-                                <td>
-                                    <a href="#" class="view-invoice-btn" data-invoice="INV-980654" style="color: #3498db; font-weight: 600;">INV-980654</a>
-                                </td>
-                                <td>Francesca Ferrucci</td>
-                                <td>
-                                    <div class="fee-categories-display">
-                                        <div class="fee-category-chip support">
-                                            <i class="fas fa-calendar-check"></i> Monthly Support
-                                        </div>
-                                        <div class="fee-category-chip purchase">
-                                            <i class="fas fa-paw"></i> Pet Purchase
-                                        </div>
-                                        <div class="fee-amount-breakdown">
-                                            <span class="fee-breakdown-item">
-                                                <span style="color: #2980b9;">$144.00</span> Support
-                                            </span>
-                                            <span class="fee-breakdown-item">
-                                                <span style="color: #d35400;">$100.00</span> Purchase
-                                            </span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td style="font-weight: 700;">$244.00</td>
-                                <td><span class="method-badge method-credit">Credit Card</span></td>
-                                <td><span class="status-badge status-paid">Paid</span></td>
-                                <td>TXN-789456</td>
-                                <td>
-                                    <div class="actions-dropdown">
-                                        <button class="actions-btn">
-                                            Actions <i class="fas fa-chevron-down"></i>
-                                        </button>
-                                        <div class="actions-menu">
-                                            <div class="action-item view view-payment-btn" data-payment-id="1">
-                                                <i class="fas fa-eye"></i> View Details
-                                            </div>
-                                            <div class="action-item edit">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </div>
-                                            <div class="action-item refund">
-                                                <i class="fas fa-undo-alt"></i> Refund
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            
-                            <!-- Example 2: John Smith - Membership + Monthly Support -->
-                            <tr>
-                                <td>Jan 14, 2026</td>
-                                <td>
-                                    <a href="#" class="view-invoice-btn" data-invoice="INV-980653" style="color: #3498db; font-weight: 600;">INV-980653</a>
-                                </td>
-                                <td>John Smith</td>
-                               <td>
-                                    <div class="fee-categories-display">
-                                        <div class="fee-category-chip membership">
-                                            <i class="fas fa-users"></i> Membership
-                                        </div>
-                                        <div class="fee-category-chip support">
-                                            <i class="fas fa-calendar-check"></i> Monthly Support
-                                        </div>
-                                        <div class="fee-amount-breakdown">
-                                            <span class="fee-breakdown-item">
-                                                <span style="color: #27ae60;">$39.00</span> Membership
-                                            </span>
-                                            <span class="fee-breakdown-item">
-                                                <span style="color: #2980b9;">$50.00</span> Support
-                                            </span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td style="font-weight: 700;">$89.00</td>
-                                <td><span class="method-badge method-bank">Bank Transfer</span></td>
-                                <td><span class="status-badge status-paid">Paid</span></td>
-                                <td>TXN-789455</td>
-                                <td>
-                                    <div class="actions-dropdown">
-                                        <button class="actions-btn">
-                                            Actions <i class="fas fa-chevron-down"></i>
-                                        </button>
-                                        <div class="actions-menu">
-                                            <div class="action-item view view-payment-btn" data-payment-id="2">
-                                                <i class="fas fa-eye"></i> View Details
-                                            </div>
-                                            <div class="action-item edit">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </div>
-                                            <div class="action-item refund">
-                                                <i class="fas fa-undo-alt"></i> Refund
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            
-                            <!-- Example 3: Maria Garcia - Monthly Support Only -->
-                            <tr>
-                                <td>Jan 14, 2026</td>
-                                <td>
-                                    <a href="#" class="view-invoice-btn" data-invoice="INV-980652" style="color: #3498db; font-weight: 600;">INV-980652</a>
-                                </td>
-                                <td>Maria Garcia</td>
-                                <td>
-                                    <div class="fee-categories-display">
-                                        <div class="fee-category-chip support">
-                                            <i class="fas fa-calendar-check"></i> Monthly Support
-                                        </div>
-                                        <div class="fee-amount-breakdown">
-                                            <span class="fee-breakdown-item">
-                                                <span style="color: #2980b9;">$450.00</span> Support
-                                            </span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td style="font-weight: 700;">$450.00</td>
-                                <td><span class="method-badge method-credit">Credit Card</span></td>
-                                <td><span class="status-badge status-refunded">Refunded</span></td>
-                                <td>TXN-789454</td>
-                                <td>
-                                    <div class="actions-dropdown">
-                                        <button class="actions-btn">
-                                            Actions <i class="fas fa-chevron-down"></i>
-                                        </button>
-                                        <div class="actions-menu">
-                                            <div class="action-item view view-payment-btn" data-payment-id="3">
-                                                <i class="fas fa-eye"></i> View Details
-                                            </div>
-                                            <div class="action-item edit">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </div>
-                                            <div class="action-item refund">
-                                                <i class="fas fa-undo-alt"></i> Refund
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            
-                            <!-- Example 4: Robert Chen - Monthly Support Only -->
-                            <tr>
-                                <td>Jan 13, 2026</td>
-                                <td>
-                                    <a href="#" class="view-invoice-btn" data-invoice="INV-980651" style="color: #3498db; font-weight: 600;">INV-980651</a>
-                                </td>
-                                <td>Robert Chen</td>
-                                <td>
-                                    <div class="fee-categories-display">
-                                        <div class="fee-category-chip support">
-                                            <i class="fas fa-calendar-check"></i> Monthly Support
-                                        </div>
-                                        <div class="fee-amount-breakdown">
-                                            <span class="fee-breakdown-item">
-                                                <span style="color: #2980b9;">$187.50</span> Support (2 pets)
-                                            </span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td style="font-weight: 700;">$187.50</td>
-                                <td><span class="method-badge method-credit">Credit Card</span></td>
-                                <td><span class="status-badge status-paid">Paid</span></td>
-                                <td>TXN-789453</td>
-                                <td>
-                                    <div class="actions-dropdown">
-                                        <button class="actions-btn">
-                                            Actions <i class="fas fa-chevron-down"></i>
-                                        </button>
-                                        <div class="actions-menu">
-                                            <div class="action-item view view-payment-btn" data-payment-id="4">
-                                                <i class="fas fa-eye"></i> View Details
-                                            </div>
-                                            <div class="action-item edit">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </div>
-                                            <div class="action-item refund">
-                                                <i class="fas fa-undo-alt"></i> Refund
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            
-                            <!-- Example 5: Sarah Johnson - All Three Categories -->
-                            <tr>
-                                <td>Jan 12, 2026</td>
-                                <td>
-                                    <a href="#" class="view-invoice-btn" data-invoice="INV-980650" style="color: #3498db; font-weight: 600;">INV-980650</a>
-                                </td>
-                                <td>Sarah Johnson</td>
-                                <td>
-                                    <div class="fee-categories-display">
-                                        <div class="fee-category-chip membership">
-                                            <i class="fas fa-users"></i> Membership
-                                        </div>
-                                        <div class="fee-category-chip support">
-                                            <i class="fas fa-calendar-check"></i> Monthly Support
-                                        </div>
-                                        <div class="fee-category-chip purchase">
-                                            <i class="fas fa-paw"></i> Pet Purchase
-                                        </div>
-                                        <div class="fee-amount-breakdown">
-                                            <span class="fee-breakdown-item">
-                                                <span style="color: #27ae60;">$75.00</span> Membership
-                                            </span>
-                                            <span class="fee-breakdown-item">
-                                                <span style="color: #2980b9;">$120.00</span> Support
-                                            </span>
-                                            <span class="fee-breakdown-item">
-                                                <span style="color: #d35400;">$250.00</span> Purchase
-                                            </span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td style="font-weight: 700;">$445.00</td>
-                                <td><span class="method-badge method-debit">Debit Card</span></td>
-                                <td><span class="status-badge status-paid">Paid</span></td>
-                                <td>TXN-789452</td>
-                                <td>
-                                    <div class="actions-dropdown">
-                                        <button class="actions-btn">
-                                            Actions <i class="fas fa-chevron-down"></i>
-                                        </button>
-                                        <div class="actions-menu">
-                                            <div class="action-item view view-payment-btn" data-payment-id="5">
-                                                <i class="fas fa-eye"></i> View Details
-                                            </div>
-                                            <div class="action-item edit">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </div>
-                                            <div class="action-item refund">
-                                                <i class="fas fa-undo-alt"></i> Refund
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <!-- Pagination -->
-                    <div class="pagination">
-                        <div class="pagination-info">Showing 1-5 of 24 payments</div>
-                        <div class="pagination-controls">
-                            <button class="pagination-btn active">1</button>
-                            <button class="pagination-btn">2</button>
-                            <button class="pagination-btn">3</button>
-                            <button class="pagination-btn">4</button>
-                            <button class="pagination-btn">5</button>
-                            <button class="pagination-btn">Next</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Right Column: Fee Category Breakdown -->
-            <div class="dashboard-right">
-                <!-- Fee Category Breakdown -->
-                <div class="fee-breakdown-section">
-                    <h2 class="section-title">
-                        <i class="fas fa-chart-pie"></i> Fee Category Breakdown
-                    </h2>
-                    <p class="section-subtitle">Extracted from Member Invoices - Multiple Categories per Invoice</p>
-                    
-                    <!-- Category Cards -->
-                    <div class="category-cards-grid">
-                        <!-- All Fees Card -->
-                        <div class="category-card all-fees">
-                            <div class="category-header">
-                                <div class="category-icon">
-                                    <i class="fas fa-layer-group"></i>
-                                </div>
-                                <h4>All Fees</h4>
-                            </div>
-                            <div class="category-amount">$49,490.00</div>
-                        </div>
-                        
-                        <!-- Monthly Support Card -->
-                        <div class="category-card monthly-support">
-                            <div class="category-header">
-                                <div class="category-icon">
-                                    <i class="fas fa-calendar-check"></i>
-                                </div>
-                                <div>
-                                    <h4>Monthly Support Fees</h4>
-                                    <p class="category-description">Total of Member's Monthly Support Fees (appears on 85% of invoices)</p>
-                                </div>
-                            </div>
-                            <div class="category-amount">$38,650.00</div>
-                        </div>
-                        
-                        <!-- Membership Card -->
-                        <div class="category-card membership">
-                            <div class="category-header">
-                                <div class="category-icon">
-                                    <i class="fas fa-users"></i>
-                                </div>
-                                <div>
-                                    <h4>Membership Fees</h4>
-                                    <p class="category-description">One-time Membership Fee</p>
-                                </div>
-                            </div>
-                            <div class="category-amount">$9,520.00</div>
-                        </div>
-                        
-                        <!-- Pet Purchase Card -->
-                        <div class="category-card pet-purchase">
-                            <div class="category-header">
-                                <div class="category-icon">
-                                    <i class="fas fa-paw"></i>
-                                </div>
-                                <div>
-                                    <h4>Pet Purchase Fees</h4>
-                                    <p class="category-description">Fee Member Pays at Cancellation</p>
-                                </div>
-                            </div>
-                            <div class="category-amount">$8,080.00</div>
-                        </div>
-                        
-                        <!-- Products Card -->
-                        <div class="category-card products">
-                            <div class="category-header">
-                                <div class="category-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </div>
-                                <div>
-                                    <h4>Products</h4>
-                                    <p class="category-description">Flea Prevention, Non-Formulary Medications, Retail Items</p>
-                                </div>
-                            </div>
-                            <div class="category-amount">$2,340.00</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Filter Section -->
-                    <div class="filter-section">
-                        <div class="filter-header">
-                            <h4>Filter Options</h4>
-                        </div>
-                        
-                        <div class="filter-controls">
-                            <div class="filter-group">
-                                <label>Fee Category</label>
-                                <select class="filter-select">
-                                    <option>All Categories</option>
-                                    <option>Monthly Support Fees</option>
-                                    <option>Membership Fees</option>
-                                    <option>Pet Purchase Fees</option>
-                                    <option>Products</option>
-                                </select>
-                            </div>
-                            
-                            <div class="filter-group">
-                                <label>Payment Method</label>
-                                <select class="filter-select">
-                                    <option>All Methods</option>
-                                    <option>Credit Card</option>
-                                    <option>Debit Card</option>
-                                    <option>Bank Transfer</option>
-                                    <option>Cash</option>
-                                </select>
-                            </div>
-                            
-                            <div class="filter-group">
-                                <label>Status</label>
-                                <select class="filter-select">
-                                    <option>All Statuses</option>
-                                    <option>PAID</option>
-                                    <option>PENDING</option>
-                                    <option>REFUNDED</option>
-                                    <option>SCHEDULED</option>
-                                </select>
-                            </div>
-                            
-                            <div class="filter-group date-range-group">
-                                <label>Date Range</label>
-                                <div class="date-inputs">
-                                    <input type="date" class="date-input" value="2020-01-01">
-                                    <span>to</span>
-                                    <input type="date" class="date-input" value="2020-01-31">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="filter-actions">
-                            <button class="clear-btn">Clear All</button>
-                            <button class="apply-btn">
-                                <i class="fas fa-filter"></i> Apply Filters
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Payment Details Modal -->
-    <div class="payment-details-modal" id="paymentDetailsModal">
-        <div class="payment-details-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Payment Details</h2>
-                <button class="close-modal" id="closeModalBtn">&times;</button>
-            </div>
-            <div class="modal-body">
-                <!-- Dynamic content will be inserted here -->
-                <div id="modalContent">
-                    <!-- Content will be loaded via JavaScript -->
-                </div>
+    <!-- Header Navigation -->
+    <div class="header-nav">
+        <div class="nav-container">
+            <div class="logo">Hannah Pet Hospital</div>
+            <div class="nav-links">
+                <a href="#">Dashboard</a>
+                <a href="#">Members</a>
+                <a href="#">Invoices</a>
+                <a href="#" class="active">Payments</a>
+                <a href="#">Activities</a>
+                <a href="#">Documents</a>
+                <a href="#">Reports</a>
             </div>
         </div>
     </div>
 
-    <script>
-        // Payment data for the modal
-        const paymentDetails = {
-            1: {
-                invoiceNumber: "INV-980654",
-                memberName: "Francesca Ferrucci",
-                date: "Jan 15, 2026",
-                amount: "$244.00",
-                method: "Credit Card",
-                status: "Paid",
-                reference: "TXN-789456",
-                categories: "Monthly Support + Pet Purchase",
-                lineItems: [
-                    { description: "Total Lifetime Care™ Plan - Carlotta", category: "Monthly Support", amount: "$97.00" },
-                    { description: "Total Lifetime Care™ Plan - Teddy", category: "Monthly Support", amount: "$47.00" },
-                    { description: "Pet Adoption Fee - New Puppy", category: "Pet Purchase", amount: "$100.00" }
-                ],
-                notes: "Member enrolled two existing pets and adopted a new puppy."
-            },
-            2: {
-                invoiceNumber: "INV-980653",
-                memberName: "John Smith",
-                date: "Jan 14, 2026",
-                amount: "$89.00",
-                method: "Bank Transfer",
-                status: "Paid",
-                reference: "TXN-789455",
-                categories: "Membership + Monthly Support",
-                lineItems: [
-                    { description: "Annual Membership Renewal", category: "Membership", amount: "$39.00" },
-                    { description: "Total Lifetime Care™ Plan - Max", category: "Monthly Support", amount: "$50.00" }
-                ],
-                notes: "Standard annual renewal with monthly plan."
-            },
-            3: {
-                invoiceNumber: "INV-980652",
-                memberName: "Maria Garcia",
-                date: "Jan 14, 2026",
-                amount: "$450.00",
-                method: "Credit Card",
-                status: "Refunded",
-                reference: "TXN-789454",
-                categories: "Monthly Support",
-                lineItems: [
-                    { description: "Total Lifetime Care™ Plan - Luna", category: "Monthly Support", amount: "$97.39" },
-                    { description: "Total Lifetime Care™ Plan - Bella", category: "Monthly Support", amount: "$105.59" },
-                    { description: "Total Lifetime Care™ Plan - Charlie", category: "Monthly Support", amount: "$97.39" },
-                    { description: "Total Lifetime Care™ Plan - Rocky", category: "Monthly Support", amount: "$105.59" },
-                    { description: "Total Lifetime Care™ Plan - Daisy", category: "Monthly Support", amount: "$44.04" }
-                ],
-                notes: "Refund issued due to overpayment. Member has 5 pets on plan."
-            },
-            4: {
-                invoiceNumber: "INV-980651",
-                memberName: "Robert Chen",
-                date: "Jan 13, 2026",
-                amount: "$187.50",
-                method: "Credit Card",
-                status: "Paid",
-                reference: "TXN-789453",
-                categories: "Monthly Support",
-                lineItems: [
-                    { description: "Total Lifetime Care™ Plan - Coco", category: "Monthly Support", amount: "$97.50" },
-                    { description: "Total Lifetime Care™ Plan - Milo", category: "Monthly Support", amount: "$90.00" }
-                ],
-                notes: "Two pets on standard monthly plans."
-            },
-            5: {
-                invoiceNumber: "INV-980650",
-                memberName: "Sarah Johnson",
-                date: "Jan 12, 2026",
-                amount: "$445.00",
-                method: "Debit Card",
-                status: "Paid",
-                reference: "TXN-789452",
-                categories: "Membership + Monthly Support + Pet Purchase",
-                lineItems: [
-                    { description: "New Member Enrollment", category: "Membership", amount: "$75.00" },
-                    { description: "Total Lifetime Care™ Plan - Buddy", category: "Monthly Support", amount: "$120.00" },
-                    { description: "Pet Transfer Fee - Golden Retriever", category: "Pet Purchase", amount: "$250.00" }
-                ],
-                notes: "New member with pet transfer from another clinic."
-            }
-        };
-        
-        // DOM Elements
-        const modal = document.getElementById('paymentDetailsModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const modalContent = document.getElementById('modalContent');
-        
-        // View Payment Details buttons
-        document.querySelectorAll('.view-payment-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const paymentId = this.dataset.paymentId;
-                showPaymentDetails(paymentId);
-            });
-        });
-        
-        // View Invoice buttons
-        document.querySelectorAll('.view-invoice-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const invoiceNumber = this.dataset.invoice;
-                alert(`Would navigate to invoice: ${invoiceNumber}`);
-            });
-        });
-        
-        // Close modal
-        closeModalBtn.addEventListener('click', closeModal);
-        
-        // Close modal when clicking outside
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-        
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && modal.style.display === 'flex') {
-                closeModal();
-            }
-        });
-        
-        // Show payment details
-        function showPaymentDetails(paymentId) {
-            const payment = paymentDetails[paymentId];
-            
-            if (!payment) return;
-            
-            // Generate line items HTML
-            let lineItemsHtml = '';
-            payment.lineItems.forEach(item => {
-                let categoryClass = '';
-                if (item.category.includes('Support')) categoryClass = 'support';
-                if (item.category.includes('Membership')) categoryClass = 'membership';
-                if (item.category.includes('Purchase')) categoryClass = 'purchase';
-                
-                lineItemsHtml += `
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Payments</h1>
+            <p>View, record, and reconcile all payments across our invoices</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h2>$48,250.00</h2>
+                <div class="label">Collected This Month</div>
+                <div class="trend up">↑ 12% from last month</div>
+            </div>
+            <div class="stat-card">
+                <h2>12</h2>
+                <div class="label">Payments Today</div>
+                <div class="trend up">↑ 2 more than yesterday</div>
+            </div>
+            <div class="stat-card">
+                <h2>$1,240.00</h2>
+                <div class="label">Refunded This Month</div>
+                <div class="trend down">↓ 8% from last month</div>
+            </div>
+            <div class="stat-card">
+                <h2>$320.00</h2>
+                <div class="label">Refunded Today</div>
+                <div class="trend up">↑ $120 today</div>
+            </div>
+        </div>
+
+        <!-- Fee Category Breakdown -->
+        <div class="fee-breakdown">
+            <h3>Fee Category Breakdown (Extracted from Member Invoices - Multiple Categories per Invoice)</h3>
+            <table class="fee-table">
+                <thead>
                     <tr>
-                        <td>${item.description}</td>
-                        <td>
-                            <span class="fee-category-chip ${categoryClass}" style="font-size: 11px; padding: 3px 8px;">
-                                ${item.category}
-                            </span>
-                        </td>
-                        <td style="text-align: right; font-weight: 600;">${item.amount}</td>
+                        <th>All Fees</th>
+                        <th>Monthly Support Fees</th>
+                        <th>Membership Fees</th>
+                        <th>Pet Purchase Fees</th>
+                        <th>Products</th>
                     </tr>
-                `;
-            });
-            
-            // Set modal content
-            modalContent.innerHTML = `
-                <div class="detail-grid">
-                    <div class="detail-card">
-                        <div class="detail-label">Invoice Number</div>
-                        <div class="detail-value">${payment.invoiceNumber}</div>
-                    </div>
-                    <div class="detail-card">
-                        <div class="detail-label">Member Name</div>
-                        <div class="detail-value">${payment.memberName}</div>
-                    </div>
-                    <div class="detail-card">
-                        <div class="detail-label">Payment Date</div>
-                        <div class="detail-value">${payment.date}</div>
-                    </div>
-                    <div class="detail-card">
-                        <div class="detail-label">Payment Amount</div>
-                        <div class="detail-value" style="font-size: 24px; font-weight: 700; color: #27ae60;">${payment.amount}</div>
-                    </div>
-                    <div class="detail-card">
-                        <div class="detail-label">Payment Method</div>
-                        <div class="detail-value">
-                            <span class="method-badge method-${payment.method.toLowerCase().includes('credit') ? 'credit' : payment.method.toLowerCase().includes('bank') ? 'bank' : 'credit'}">
-                                ${payment.method}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="detail-card">
-                        <div class="detail-label">Status</div>
-                        <div class="detail-value">
-                            <span class="status-badge status-${payment.status.toLowerCase()}">
-                                ${payment.status}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="detail-card">
-                        <div class="detail-label">Transaction Reference</div>
-                        <div class="detail-value">${payment.reference}</div>
-                    </div>
-                    <div class="detail-card">
-                        <div class="detail-label">Fee Categories</div>
-                        <div class="detail-value">${payment.categories}</div>
-                    </div>
-                </div>
-                
-                <h3 style="margin-top: 30px; margin-bottom: 15px; color: #2c3e50;">Invoice Line Items</h3>
-                <table class="line-items-table">
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Category</th>
-                            <th style="text-align: right;">Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${lineItemsHtml}
-                        <tr style="border-top: 2px solid #2c3e50;">
-                            <td colspan="2" style="text-align: right; font-weight: 700;">Total:</td>
-                            <td style="text-align: right; font-weight: 700; font-size: 16px;">${payment.amount}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                ${payment.notes ? `
-                    <div style="margin-top: 25px; padding: 15px; background-color: #f8fafc; border-radius: 8px; border-left: 4px solid #3498db;">
-                        <div class="detail-label">Notes</div>
-                        <div class="detail-value">${payment.notes}</div>
-                    </div>
-                ` : ''}
-                
-                <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: flex-end;">
-                    <button class="clear-btn" onclick="closeModal()">Close</button>
-                    <button class="apply-btn">
-                        <i class="fas fa-print"></i> Print Receipt
-                    </button>
-                </div>
-            `;
-            
-            // Show modal
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        
-        // Close modal function
-        function closeModal() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-        
-        // Filter functionality
-        document.querySelector('.apply-btn').addEventListener('click', function() {
-            alert('Filters applied! In a real app, this would filter the payment data.');
-        });
-        
-        document.querySelector('.clear-btn').addEventListener('click', function() {
-            // Reset all filter inputs
-            document.querySelectorAll('.filter-select').forEach(select => {
-                select.selectedIndex = 0;
-            });
-            document.querySelectorAll('.date-input').forEach((input, index) => {
-                input.value = index === 0 ? '2020-01-01' : '2020-01-31';
-            });
-            alert('All filters cleared!');
-        });
-        
-        // Initialize pagination
-        document.querySelectorAll('.pagination-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (!this.textContent.includes('Next')) {
-                    document.querySelectorAll('.pagination-btn').forEach(b => {
-                        b.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                    alert(`Loading page ${this.textContent}`);
-                } else {
-                    alert('Loading next page');
-                }
-            });
-        });
-    </script>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fee-category">Monthly Support Fees</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="fee-amount">$38,650.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="fee-description">Total of Member's Monthly Support Fees (applies on 85% of invoices)</td>
+                    </tr>
+                    <tr>
+                        <td class="fee-category">Membership Fees</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="fee-amount">$9,520.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="fee-description">One-time Membership Fee</td>
+                    </tr>
+                    <tr>
+                        <td class="fee-category">Pet Purchase Fees</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="fee-amount">$8,080.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="fee-description">Fee Member Pays at Cancellation</td>
+                    </tr>
+                    <tr>
+                        <td class="fee-category">Products</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="fee-amount">$2,340.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <label>Fee Category</label>
+                <select>
+                    <option>All Categories</option>
+                    <option>Monthly Support</option>
+                    <option>Membership</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Payment Method</label>
+                <select>
+                    <option>All Methods</option>
+                    <option>Credit Card</option>
+                    <option>Bank Transfer</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Status</label>
+                <select>
+                    <option>All Statuses</option>
+                    <option>PAID</option>
+                    <option>REFUNDED</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Date Range</label>
+                <input type="date" value="2023-01-01">
+                <span>to</span>
+                <input type="date" value="2023-01-31">
+            </div>
+        </div>
+
+        <!-- Payments Table -->
+        <div class="payments-table-container">
+            <table class="payments-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Invoice #</th>
+                        <th>Member Name</th>
+                        <th>Fee Categories</th>
+                        <th>Amount</th>
+                        <th>Method</th>
+                        <th>Status</th>
+                        <th>Reference</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jan 15, 2026</td>
+                        <td>INV-980654</td>
+                        <td>Francesca Ferrucci</td>
+                        <td>
+                            <div>✔️ Pet Purchase $144.00</div>
+                            <div>✔️ Support $100.00</div>
+                        </td>
+                        <td>$244.00</td>
+                        <td class="method">Credit Card</td>
+                        <td><span class="status paid">PAID</span></td>
+                        <td>TXN-789456</td>
+                        <td class="actions">Actions ▼</td>
+                    </tr>
+                    <tr>
+                        <td>Jan 14, 2026</td>
+                        <td>INV-980653</td>
+                        <td>John Smith</td>
+                        <td>
+                            <div>✔️ Membership $39.00</div>
+                            <div>✔️ Support $50.00</div>
+                        </td>
+                        <td>$89.00</td>
+                        <td class="method">Bank Transfer</td>
+                        <td><span class="status paid">PAID</span></td>
+                        <td>TXN-789455</td>
+                        <td class="actions">Actions ▼</td>
+                    </tr>
+                    <tr>
+                        <td>Jan 13, 2026</td>
+                        <td>INV-980651</td>
+                        <td>Robert Chen</td>
+                        <td>
+                            <div>✔️ Membership $187.50</div>
+                            <div>✔️ Support $150.00</div>
+                        </td>
+                        <td>$337.50</td>
+                        <td class="method">Credit Card</td>
+                        <td><span class="status refunded">REFUNDED</span></td>
+                        <td>TXN-789453</td>
+                        <td class="actions">Actions ▼</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            Showing 1-5 of 24 payments
+        </div>
+    </div>
 </body>
 </html>
