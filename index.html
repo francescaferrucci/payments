@@ -557,13 +557,16 @@
             color: #3498db;
         }
         
-        .action-item.edit {
-            color: #f39c12;
+        .action-item.paynow {
+            color: #008000;
         }
         
-        .action-item.refund {
+        .action-item.schedulepayment {
             color: #c0392b;
         }
+
+        .action-item.paymentplan {
+            color: #f39c12;
         
         /* Fee Category Breakdown Visual */
         .fee-category-chart {
@@ -853,7 +856,6 @@
         <!-- Page Header -->
         <div class="page-header">
             <h1 class="page-title">Payments</h1>
-            <p class="page-subtitle">View, record, and reconcile all payments across our invoices</p>
         </div>
         
         <!-- Metrics Cards -->
@@ -1108,11 +1110,14 @@
                                     <div class="action-item view view-payment-btn" data-payment-id="1">
                                         <i class="fas fa-eye"></i> View Details
                                     </div>
-                                    <div class="action-item edit">
-                                        <i class="fas fa-edit"></i> Edit
+                                    <div class="action-item paynow">
+                                        <i class="fas fa-$"></i> Pay Now
                                     </div>
-                                    <div class="action-item refund">
-                                        <i class="fas fa-undo-alt"></i> Refund
+                                    <div class="action-item schedulepayment">
+                                        <i class="fas fa-calendar-alt"></i> Schedule Payment
+                                    </div>
+                                    <div class="action-item paymentplan">
+                                        <i class="fas fa-file-invoice-dollar"></i> Payment Plan
                                     </div>
                                 </div>
                             </div>
