@@ -3,407 +3,947 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payments Dashboard - Hannah Pet Hospital</title>
+    <title>Payments Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        
         body {
-            background-color: #f8fafc;
-            color: #334155;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            padding: 20px;
+            min-height: 100vh;
         }
-        /* Header Navigation */
-        .header-nav {
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 0 24px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 64px;
-        }
-        .logo {
-            font-size: 20px;
-            font-weight: 700;
-            color: #0f172a;
-        }
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #64748b;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 8px 0;
-            position: relative;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover {
-            color: #0f172a;
-        }
-        .nav-links a.active {
-            color: #3b82f6;
-        }
-        .nav-links a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: #3b82f6;
-            border-radius: 1px;
-        }
-        /* Main Content */
+        
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 24px;
         }
+        
         /* Header */
         .page-header {
-            margin-bottom: 32px;
+            margin-bottom: 30px;
         }
-        .page-header h1 {
-            font-size: 30px;
+        
+        .page-title {
+            font-size: 32px;
             font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 8px;
+            color: #2c3e50;
+            margin-bottom: 10px;
         }
-        .page-header p {
-            color: #64748b;
-            font-size: 14px;
+        
+        .page-subtitle {
+            font-size: 16px;
+            color: #7f8c8d;
+            line-height: 1.5;
         }
-        /* Stats Grid */
-        .stats-grid {
+        
+        /* Metrics Cards Grid */
+        .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
-            margin-bottom: 32px;
+            margin-bottom: 40px;
         }
-        .stat-card {
-            background: white;
+        
+        .metric-card {
+            background-color: white;
             border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
         }
-        .stat-card h2 {
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+        
+        .metric-card.collected::before {
+            background: linear-gradient(90deg, #51b5e0 0%, #3498db 100%);
+        }
+        
+        .metric-card.today::before {
+            background: linear-gradient(90deg, #1eb53a 0%, #27ae60 100%);
+        }
+        
+        .metric-card.refunded-month::before {
+            background: linear-gradient(90deg, #ff6308 0%, #e67e22 100%);
+        }
+        
+        .metric-card.refunded-today::before {
+            background: linear-gradient(90deg, #8c2633 0%, #c0392b 100%);
+        }
+        
+        .metric-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 22px;
+            color: white;
+        }
+        
+        .metric-card.collected .metric-icon {
+            background-color: #51b5e0;
+        }
+        
+        .metric-card.today .metric-icon {
+            background-color: #1eb53a;
+        }
+        
+        .metric-card.refunded-month .metric-icon {
+            background-color: #ff6308;
+        }
+        
+        .metric-card.refunded-today .metric-icon {
+            background-color: #8c2633;
+        }
+        
+        .metric-value {
             font-size: 28px;
             font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 4px;
+            color: #2c3e50;
+            margin-bottom: 5px;
         }
-        .stat-card .label {
+        
+        .metric-label {
             font-size: 14px;
-            color: #64748b;
-            margin-bottom: 8px;
+            color: #7f8c8d;
+            font-weight: 500;
         }
-        .stat-card .trend {
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .trend.up {
-            color: #10b981;
-        }
-        .trend.down {
-            color: #ef4444;
-        }
-        /* Fee Breakdown */
-        .fee-breakdown {
-            background: white;
+        
+        .metric-change {
+            font-size: 12px;
+            margin-top: 10px;
+            padding: 4px 8px;
             border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 32px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
+            display: inline-block;
         }
-        .fee-breakdown h3 {
-            font-size: 18px;
+        
+        .metric-change.positive {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #27ae60;
+        }
+        
+        .metric-change.negative {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: #c0392b;
+        }
+        
+        /* Fee Category Breakdown */
+        .fee-breakdown-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .section-title {
+            font-size: 20px;
             font-weight: 600;
-            color: #0f172a;
+            color: #2c3e50;
             margin-bottom: 20px;
-        }
-        .fee-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .fee-table th {
-            text-align: left;
-            padding: 12px 16px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #64748b;
-            border-bottom: 1px solid #e2e8f0;
-            background: #f8fafc;
-        }
-        .fee-table td {
-            padding: 16px;
-            border-bottom: 1px solid #f1f5f9;
-        }
-        .fee-table tr:last-child td {
-            border-bottom: none;
-        }
-        .fee-category {
-            font-weight: 600;
-            color: #0f172a;
-        }
-        .fee-description {
-            font-size: 13px;
-            color: #64748b;
-            margin-top: 4px;
-        }
-        .fee-amount {
-            font-weight: 700;
-            color: #0f172a;
-            text-align: right;
-        }
-        /* Filters */
-        .filters {
             display: flex;
-            gap: 16px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
             align-items: center;
         }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: #51b5e0;
+        }
+        
+        .fee-category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #ecf0f1;
+            padding-bottom: 15px;
+        }
+        
+        .fee-tab {
+            padding: 10px 20px;
+            background-color: #f8fafc;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #5d6d7e;
+            transition: all 0.3s;
+        }
+        
+        .fee-tab:hover {
+            background-color: #edf2f7;
+            border-color: #51b5e0;
+        }
+        
+        .fee-tab.active {
+            background-color: #51b5e0;
+            color: white;
+            border-color: #51b5e0;
+        }
+        
+        .fee-tab .badge {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            align-items: flex-end;
+        }
+        
         .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #5d6d7e;
+            font-size: 14px;
+        }
+        
+        .filter-select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: white;
+            color: #2c3e50;
+        }
+        
+        .filter-select:focus {
+            outline: none;
+            border-color: #51b5e0;
+            box-shadow: 0 0 0 3px rgba(81, 181, 224, 0.2);
+        }
+        
+        .date-range-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .date-input {
+            padding: 10px 15px;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 14px;
+            min-width: 150px;
+        }
+        
+        .apply-filters-btn {
+            background-color: #51b5e0;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: background-color 0.3s;
         }
-        .filter-group label {
-            font-size: 14px;
-            color: #64748b;
+        
+        .apply-filters-btn:hover {
+            background-color: #3a9bc5;
         }
-        select, input {
-            padding: 8px 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 14px;
-            background: white;
+        
+        .clear-filters-btn {
+            background-color: #f8fafc;
+            color: #5d6d7e;
+            border: 1px solid #e0e6ed;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
         }
+        
+        .clear-filters-btn:hover {
+            background-color: #edf2f7;
+        }
+        
         /* Payments Table */
         .payments-table-container {
-            background: white;
+            background-color: white;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
         }
-        .payments-table {
-            width: 100%;
-            border-collapse: collapse;
+        
+        .table-header {
+            padding: 20px;
+            border-bottom: 1px solid #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .payments-table th {
-            text-align: left;
-            padding: 16px 20px;
-            font-size: 13px;
+        
+        .table-title {
+            font-size: 18px;
             font-weight: 600;
-            color: #64748b;
-            border-bottom: 1px solid #e2e8f0;
-            background: #f8fafc;
+            color: #2c3e50;
         }
-        .payments-table td {
-            padding: 16px 20px;
-            border-bottom: 1px solid #f1f5f9;
+        
+        .table-actions {
+            display: flex;
+            gap: 10px;
         }
-        .payments-table tr:last-child td {
-            border-bottom: none;
-        }
-        .status {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        .status.paid {
-            background: #dcfce7;
-            color: #166534;
-        }
-        .status.refunded {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-        .method {
+        
+        .export-btn {
+            background-color: #f8fafc;
+            color: #5d6d7e;
+            border: 1px solid #e0e6ed;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
         }
-        .actions {
-            color: #3b82f6;
-            font-weight: 500;
-            cursor: pointer;
+        
+        .export-btn:hover {
+            background-color: #edf2f7;
         }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background-color: #f8fafc;
+        }
+        
+        th {
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: #5d6d7e;
+            font-size: 14px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 14px;
+        }
+        
+        tbody tr {
+            transition: background-color 0.2s;
+        }
+        
+        tbody tr:hover {
+            background-color: #f8fafc;
+        }
+        
+        /* Status Badges */
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+        
+        .status-paid {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #27ae60;
+        }
+        
+        .status-pending {
+            background-color: rgba(241, 196, 15, 0.1);
+            color: #f39c12;
+        }
+        
+        .status-refunded {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: #c0392b;
+        }
+        
+        .status-failed {
+            background-color: rgba(149, 165, 166, 0.1);
+            color: #7f8c8d;
+        }
+        
+        /* Method Badges */
+        .method-badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .method-credit {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+        
+        .method-debit {
+            background-color: rgba(155, 89, 182, 0.1);
+            color: #9b59b6;
+        }
+        
+        .method-cash {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #27ae60;
+        }
+        
+        .method-check {
+            background-color: rgba(230, 126, 34, 0.1);
+            color: #e67e22;
+        }
+        
+        .method-bank {
+            background-color: rgba(41, 128, 185, 0.1);
+            color: #2980b9;
+        }
+        
+        /* Actions Dropdown */
+        .actions-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .actions-btn {
+            background-color: #f8fafc;
+            border: 1px solid #e0e6ed;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .actions-btn:hover {
+            background-color: #edf2f7;
+        }
+        
+        .actions-menu {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+            z-index: 100;
+            display: none;
+        }
+        
+        .actions-dropdown:hover .actions-menu {
+            display: block;
+        }
+        
+        .action-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+        
+        .action-item:hover {
+            background-color: #f8fafc;
+        }
+        
+        .action-item.view {
+            color: #3498db;
+        }
+        
+        .action-item.edit {
+            color: #f39c12;
+        }
+        
+        .action-item.refund {
+            color: #c0392b;
+        }
+        
+        /* Payment Details Sidebar (for larger screens) */
+        .payment-details-sidebar {
+            display: none;
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 400px;
+            background-color: white;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .close-sidebar {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #7f8c8d;
+        }
+        
+        .sidebar-content {
+            padding: 20px;
+        }
+        
+        .detail-section {
+            margin-bottom: 25px;
+        }
+        
+        .detail-label {
+            font-size: 12px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-size: 16px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        /* Fee Category Breakdown Visual */
+        .fee-category-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .fee-category-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #51b5e0;
+        }
+        
+        .fee-category-item.support-fees {
+            border-left-color: #51b5e0;
+        }
+        
+        .fee-category-item.membership-fees {
+            border-left-color: #1eb53a;
+        }
+        
+        .fee-category-item.pet-purchase-fees {
+            border-left-color: #ff6308;
+        }
+        
+        .fee-category-item.products {
+            border-left-color: #8c2633;
+        }
+        
+        .fee-category-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .fee-category-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .support-fees .fee-category-icon {
+            background-color: #51b5e0;
+        }
+        
+        .membership-fees .fee-category-icon {
+            background-color: #1eb53a;
+        }
+        
+        .pet-purchase-fees .fee-category-icon {
+            background-color: #ff6308;
+        }
+        
+        .products .fee-category-icon {
+            background-color: #8c2633;
+        }
+        
+        .fee-category-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .fee-category-amount {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+            font-family: 'Courier New', monospace;
+        }
+        
         /* Pagination */
         .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .pagination-info {
             font-size: 14px;
-            color: #64748b;
+            color: #5d6d7e;
+        }
+        
+        .pagination-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .pagination-btn {
+            padding: 8px 16px;
+            border: 1px solid #e0e6ed;
+            background-color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .pagination-btn:hover {
+            background-color: #f8fafc;
+        }
+        
+        .pagination-btn.active {
+            background-color: #51b5e0;
+            color: white;
+            border-color: #51b5e0;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .date-range-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .table-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .payment-details-sidebar {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header Navigation -->
-    <div class="header-nav">
-        <div class="nav-container">
-            <div class="logo">Hannah Pet Hospital</div>
-            <div class="nav-links">
-                <a href="#">Dashboard</a>
-                <a href="#">Members</a>
-                <a href="#">Invoices</a>
-                <a href="#" class="active">Payments</a>
-                <a href="#">Activities</a>
-                <a href="#">Documents</a>
-                <a href="#">Reports</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Content -->
     <div class="container">
         <!-- Page Header -->
         <div class="page-header">
-            <h1>Payments</h1>
-            <p>View, record, and reconcile all payments across our invoices</p>
+            <h1 class="page-title">Payments</h1>
+            <p class="page-subtitle">View, record, and reconcile all payments across our invoices</p>
         </div>
-
-        <!-- Stats Cards -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h2>$48,250.00</h2>
-                <div class="label">Collected This Month</div>
-                <div class="trend up">↑ 12% from last month</div>
+        
+        <!-- Metrics Cards -->
+        <div class="metrics-grid">
+            <div class="metric-card collected">
+                <div class="metric-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="metric-value">$48,250.00</div>
+                <div class="metric-label">Collected This Month</div>
+                <div class="metric-change positive">
+                    <i class="fas fa-arrow-up"></i> 12% from last month
+                </div>
             </div>
-            <div class="stat-card">
-                <h2>12</h2>
-                <div class="label">Payments Today</div>
-                <div class="trend up">↑ 2 more than yesterday</div>
+            
+            <div class="metric-card today">
+                <div class="metric-icon">
+                    <i class="fas fa-calendar-day"></i>
+                </div>
+                <div class="metric-value">12</div>
+                <div class="metric-label">Payments Today</div>
+                <div class="metric-change positive">
+                    <i class="fas fa-arrow-up"></i> 2 more than yesterday
+                </div>
             </div>
-            <div class="stat-card">
-                <h2>$1,240.00</h2>
-                <div class="label">Refunded This Month</div>
-                <div class="trend down">↓ 8% from last month</div>
+            
+            <div class="metric-card refunded-month">
+                <div class="metric-icon">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="metric-value">$1,240.00</div>
+                <div class="metric-label">Refunded This Month</div>
+                <div class="metric-change negative">
+                    <i class="fas fa-arrow-down"></i> 8% from last month
+                </div>
             </div>
-            <div class="stat-card">
-                <h2>$320.00</h2>
-                <div class="label">Refunded Today</div>
-                <div class="trend up">↑ $120 today</div>
+            
+            <!-- NEW: Refunded Today Card -->
+            <div class="metric-card refunded-today">
+                <div class="metric-icon">
+                    <i class="fas fa-undo-alt"></i>
+                </div>
+                <div class="metric-value">$320.00</div>
+                <div class="metric-label">Refunded Today</div>
+                <div class="metric-change negative">
+                    <i class="fas fa-arrow-up"></i> $120 today
+                </div>
             </div>
         </div>
-
+        
         <!-- Fee Category Breakdown -->
-        <div class="fee-breakdown">
-            <h3>Fee Category Breakdown (Extracted from Member Invoices - Multiple Categories per Invoice)</h3>
-            <table class="fee-table">
-                <thead>
-                    <tr>
-                        <th>All Fees</th>
-                        <th>Monthly Support Fees</th>
-                        <th>Membership Fees</th>
-                        <th>Pet Purchase Fees</th>
-                        <th>Products</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="fee-category">Monthly Support Fees</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="fee-amount">$38,650.00</td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" class="fee-description">Total of Member's Monthly Support Fees (applies on 85% of invoices)</td>
-                    </tr>
-                    <tr>
-                        <td class="fee-category">Membership Fees</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="fee-amount">$9,520.00</td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" class="fee-description">One-time Membership Fee</td>
-                    </tr>
-                    <tr>
-                        <td class="fee-category">Pet Purchase Fees</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="fee-amount">$8,080.00</td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" class="fee-description">Fee Member Pays at Cancellation</td>
-                    </tr>
-                    <tr>
-                        <td class="fee-category">Products</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="fee-amount">$2,340.00</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="fee-breakdown-section">
+            <h2 class="section-title">
+                <i class="fas fa-chart-pie"></i> Fee Category Breakdown
+                <span style="font-size: 14px; color: #7f8c8d; margin-left: 10px; font-weight: normal;">
+                    (Extracted from Member Invoices)
+                </span>
+            </h2>
+            
+            <div class="fee-category-tabs">
+                <div class="fee-tab active">
+                    All Fees <span class="badge">$49,490.00</span>
+                </div>
+                <div class="fee-tab">
+                    Monthly Support Fees <span class="badge">$32,150.00</span>
+                </div>
+                <div class="fee-tab">
+                    Membership Fees <span class="badge">$8,420.00</span>
+                </div>
+                <div class="fee-tab">
+                    Pet Purchase Fees <span class="badge">$6,580.00</span>
+                </div>
+                <div class="fee-tab">
+                    Products <span class="badge">$2,340.00</span>
+                </div>
+            </div>
+            
+            <div class="fee-category-chart">
+                <div class="fee-category-item support-fees">
+                    <div class="fee-category-info">
+                        <div class="fee-category-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div>
+                            <div class="fee-category-name">Monthly Support Fees</div>
+                            <div style="font-size: 12px; color: #7f8c8d;">Recurring pet care plans</div>
+                        </div>
+                    </div>
+                    <div class="fee-category-amount">$32,150.00</div>
+                </div>
+                
+                <div class="fee-category-item membership-fees">
+                    <div class="fee-category-info">
+                        <div class="fee-category-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <div class="fee-category-name">Membership Fees</div>
+                            <div style="font-size: 12px; color: #7f8c8d;">Member enrollment & renewals</div>
+                        </div>
+                    </div>
+                    <div class="fee-category-amount">$8,420.00</div>
+                </div>
+                
+                <div class="fee-category-item pet-purchase-fees">
+                    <div class="fee-category-info">
+                        <div class="fee-category-icon">
+                            <i class="fas fa-paw"></i>
+                        </div>
+                        <div>
+                            <div class="fee-category-name">Pet Purchase Fees</div>
+                            <div style="font-size: 12px; color: #7f8c8d;">Initial pet adoption/transfer</div>
+                        </div>
+                    </div>
+                    <div class="fee-category-amount">$6,580.00</div>
+                </div>
+                
+                <div class="fee-category-item products">
+                    <div class="fee-category-info">
+                        <div class="fee-category-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div>
+                            <div class="fee-category-name">Products</div>
+                            <div style="font-size: 12px; color: #7f8c8d;">Food, medication, supplies</div>
+                        </div>
+                    </div>
+                    <div class="fee-category-amount">$2,340.00</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; background-color: #f8fafc; border-radius: 8px; border-left: 4px solid #f39c12;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-lightbulb" style="color: #f39c12;"></i>
+                    <div>
+                        <div style="font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Data Extraction Note</div>
+                        <div style="font-size: 14px; color: #5d6d7e;">
+                            Fee categories are extracted from line items on member invoices. 
+                            <span style="font-weight: 600;">Implementation complexity: Medium</span> - requires linking payments to invoice line items.
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Filters -->
-        <div class="filters">
+        
+        <!-- Filter Bar -->
+        <div class="filter-bar">
             <div class="filter-group">
-                <label>Fee Category</label>
-                <select>
-                    <option>All Categories</option>
-                    <option>Monthly Support</option>
-                    <option>Membership</option>
+                <label class="filter-label">Fee Category</label>
+                <select class="filter-select">
+                    <option value="all">All Categories</option>
+                    <option value="support">Monthly Support Fees</option>
+                    <option value="membership">Membership Fees</option>
+                    <option value="purchase">Pet Purchase Fees</option>
+                    <option value="products">Products</option>
                 </select>
             </div>
+            
             <div class="filter-group">
-                <label>Payment Method</label>
-                <select>
-                    <option>All Methods</option>
-                    <option>Credit Card</option>
-                    <option>Bank Transfer</option>
+                <label class="filter-label">Payment Method</label>
+                <select class="filter-select">
+                    <option value="all">All Methods</option>
+                    <option value="credit">Credit Card</option>
+                    <option value="debit">Debit Card</option>
+                    <option value="cash">Cash</option>
+                    <option value="check">Check</option>
+                    <option value="bank">Bank Transfer</option>
                 </select>
             </div>
+            
             <div class="filter-group">
-                <label>Status</label>
-                <select>
-                    <option>All Statuses</option>
-                    <option>PAID</option>
-                    <option>REFUNDED</option>
+                <label class="filter-label">Status</label>
+                <select class="filter-select">
+                    <option value="all">All Statuses</option>
+                    <option value="paid">Paid</option>
+                    <option value="pending">Pending</option>
+                    <option value="refunded">Refunded</option>
+                    <option value="failed">Failed</option>
                 </select>
             </div>
+            
             <div class="filter-group">
-                <label>Date Range</label>
-                <input type="date" value="2023-01-01">
-                <span>to</span>
-                <input type="date" value="2023-01-31">
+                <label class="filter-label">Date Range</label>
+                <div class="date-range-group">
+                    <input type="date" class="date-input" value="2026-01-01">
+                    <span>to</span>
+                    <input type="date" class="date-input" value="2026-01-31">
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <button class="apply-filters-btn">
+                    <i class="fas fa-filter"></i> Apply Filters
+                </button>
+                <button class="clear-filters-btn">
+                    Clear All
+                </button>
             </div>
         </div>
-
+        
         <!-- Payments Table -->
         <div class="payments-table-container">
-            <table class="payments-table">
+            <div class="table-header">
+                <div class="table-title">Recent Payments</div>
+                <div class="table-actions">
+                    <button class="export-btn">
+                        <i class="fas fa-download"></i> Export CSV
+                    </button>
+                    <button class="export-btn">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                </div>
+            </div>
+            
+            <table>
                 <thead>
                     <tr>
                         <th>Date</th>
                         <th>Invoice #</th>
                         <th>Member Name</th>
-                        <th>Fee Categories</th>
+                        <th>Fee Category</th>
                         <th>Amount</th>
                         <th>Method</th>
                         <th>Status</th>
@@ -414,54 +954,108 @@
                 <tbody>
                     <tr>
                         <td>Jan 15, 2026</td>
-                        <td>INV-980654</td>
+                        <td>
+                            <a href="#" style="color: #3498db; font-weight: 600;">INV-980654</a>
+                        </td>
                         <td>Francesca Ferrucci</td>
                         <td>
-                            <div>✔️ Pet Purchase $144.00</div>
-                            <div>✔️ Support $100.00</div>
+                            <span style="display: inline-flex; align-items: center; gap: 5px;">
+                                <i class="fas fa-calendar-check" style="color: #51b5e0;"></i>
+                                Monthly Support
+                            </span>
                         </td>
-                        <td>$244.00</td>
-                        <td class="method">Credit Card</td>
-                        <td><span class="status paid">PAID</span></td>
+                        <td style="font-weight: 700;">$244.00</td>
+                        <td><span class="method-badge method-credit">Credit Card</span></td>
+                        <td><span class="status-badge status-paid">Paid</span></td>
                         <td>TXN-789456</td>
-                        <td class="actions">Actions ▼</td>
+                        <td>
+                            <div class="actions-dropdown">
+                                <button class="actions-btn">
+                                    Actions <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="actions-menu">
+                                    <div class="action-item view">
+                                        <i class="fas fa-eye"></i> View
+                                    </div>
+                                    <div class="action-item edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </div>
+                                    <div class="action-item refund">
+                                        <i class="fas fa-undo-alt"></i> Refund
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
+                    
                     <tr>
                         <td>Jan 14, 2026</td>
-                        <td>INV-980653</td>
+                        <td>
+                            <a href="#" style="color: #3498db; font-weight: 600;">INV-980653</a>
+                        </td>
                         <td>John Smith</td>
                         <td>
-                            <div>✔️ Membership $39.00</div>
-                            <div>✔️ Support $50.00</div>
+                            <span style="display: inline-flex; align-items: center; gap: 5px;">
+                                <i class="fas fa-users" style="color: #1eb53a;"></i>
+                                Membership
+                            </span>
                         </td>
-                        <td>$89.00</td>
-                        <td class="method">Bank Transfer</td>
-                        <td><span class="status paid">PAID</span></td>
+                        <td style="font-weight: 700;">$89.00</td>
+                        <td><span class="method-badge method-bank">Bank Transfer</span></td>
+                        <td><span class="status-badge status-paid">Paid</span></td>
                         <td>TXN-789455</td>
-                        <td class="actions">Actions ▼</td>
-                    </tr>
-                    <tr>
-                        <td>Jan 13, 2026</td>
-                        <td>INV-980651</td>
-                        <td>Robert Chen</td>
                         <td>
-                            <div>✔️ Membership $187.50</div>
-                            <div>✔️ Support $150.00</div>
+                            <div class="actions-dropdown">
+                                <button class="actions-btn">
+                                    Actions <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="actions-menu">
+                                    <div class="action-item view">
+                                        <i class="fas fa-eye"></i> View
+                                    </div>
+                                    <div class="action-item edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </div>
+                                    <div class="action-item refund">
+                                        <i class="fas fa-undo-alt"></i> Refund
+                                    </div>
+                                </div>
+                            </div>
                         </td>
-                        <td>$337.50</td>
-                        <td class="method">Credit Card</td>
-                        <td><span class="status refunded">REFUNDED</span></td>
-                        <td>TXN-789453</td>
-                        <td class="actions">Actions ▼</td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Pagination -->
-        <div class="pagination">
-            Showing 1-5 of 24 payments
-        </div>
-    </div>
-</body>
-</html>
+                    
+                    <tr>
+                        <td>Jan 14, 2026</td>
+                        <td>
+                            <a href="#" style="color: #3498db; font-weight: 600;">INV-980652</a>
+                        </td>
+                        <td>Maria Garcia</td>
+                        <td>
+                            <span style="display: inline-flex; align-items: center; gap: 5px;">
+                                <i class="fas fa-paw" style="color: #ff6308;"></i>
+                                Pet Purchase
+                            </span>
+                        </td>
+                        <td style="font-weight: 700;">$450.00</td>
+                        <td><span class="method-badge method-credit">Credit Card</span></td>
+                        <td><span class="status-badge status-refunded">Refunded</span></td>
+                        <td>TXN-789454</td>
+                        <td>
+                            <div class="actions-dropdown">
+                                <button class="actions-btn">
+                                    Actions <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="actions-menu">
+                                    <div class="action-item view">
+                                        <i class="fas fa-eye"></i> View
+                                    </div>
+                                    <div class="action-item edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </div>
+                                    <div class="action-item refund">
+                                        <i class="fas fa-undo-alt"></i> Refund
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
