@@ -3,92 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payments Dashboard - Hannah Pet Hospital</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        body {
-            background-color: #f8fafc;
-            color: #334155;
-        }
-        /* Header Navigation */
-        .header-nav {
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 0 24px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 64px;
-        }
-        .logo {
-            font-size: 20px;
-            font-weight: 700;
-            color: #0f172a;
-        }
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #64748b;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 8px 0;
-            position: relative;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover {
-            color: #0f172a;
-        }
-        .nav-links a.active {
-            color: #3b82f6;
-        }
-        .nav-links a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: #3b82f6;
-            border-radius: 1px;
-        }
-        /* Main Content */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 24px;
-        }
-        /* Header */
-        .page-header {
-            margin-bottom: 32px;
-        }
-        .page-header h1 {
-            font-size: 30px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 8px;
-        }
-        .page-header p {
-            color: #64748b;
-            font-size: 14px;
-        }
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payments Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -463,6 +377,67 @@
             background-color: #f8fafc;
         }
         
+        /* Multi-Category Display */
+        .fee-categories-display {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .fee-category-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            max-width: fit-content;
+        }
+        
+        .fee-category-chip.support {
+            background-color: rgba(81, 181, 224, 0.1);
+            color: #2980b9;
+            border-left: 3px solid #51b5e0;
+        }
+        
+        .fee-category-chip.membership {
+            background-color: rgba(30, 181, 58, 0.1);
+            color: #27ae60;
+            border-left: 3px solid #1eb53a;
+        }
+        
+        .fee-category-chip.purchase {
+            background-color: rgba(255, 99, 8, 0.1);
+            color: #d35400;
+            border-left: 3px solid #ff6308;
+        }
+        
+        .fee-category-chip.products {
+            background-color: rgba(140, 38, 51, 0.1);
+            color: #c0392b;
+            border-left: 3px solid #8c2633;
+        }
+        
+        .fee-category-chip i {
+            font-size: 10px;
+        }
+        
+        .fee-amount-breakdown {
+            font-size: 11px;
+            color: #7f8c8d;
+            margin-top: 2px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .fee-breakdown-item {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
         /* Status Badges */
         .status-badge {
             padding: 6px 12px;
@@ -590,64 +565,6 @@
             color: #c0392b;
         }
         
-        /* Payment Details Sidebar (for larger screens) */
-        .payment-details-sidebar {
-            display: none;
-            position: fixed;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: 400px;
-            background-color: white;
-            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            overflow-y: auto;
-        }
-        
-        .sidebar-header {
-            padding: 20px;
-            border-bottom: 1px solid #ecf0f1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .sidebar-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        .close-sidebar {
-            background: none;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            color: #7f8c8d;
-        }
-        
-        .sidebar-content {
-            padding: 20px;
-        }
-        
-        .detail-section {
-            margin-bottom: 25px;
-        }
-        
-        .detail-label {
-            font-size: 12px;
-            color: #7f8c8d;
-            text-transform: uppercase;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .detail-value {
-            font-size: 16px;
-            color: #2c3e50;
-            font-weight: 500;
-        }
-        
         /* Fee Category Breakdown Visual */
         .fee-category-chart {
             display: flex;
@@ -767,6 +684,134 @@
             border-color: #51b5e0;
         }
         
+        /* Payment Details Modal */
+        .payment-details-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .payment-details-content {
+            background-color: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+        
+        .close-modal:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .detail-card {
+            background-color: #f8fafc;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .detail-label {
+            font-size: 12px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-size: 16px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .line-items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        .line-items-table th {
+            background-color: #f8fafc;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #5d6d7e;
+            border-bottom: 1px solid #e0e6ed;
+        }
+        
+        .line-items-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .line-items-table tr:last-child td {
+            border-bottom: none;
+        }
+        
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .metrics-grid {
@@ -797,8 +842,8 @@
                 overflow-x: auto;
             }
             
-            .payment-details-sidebar {
-                width: 100%;
+            .payment-details-content {
+                width: 95%;
             }
         }
     </style>
@@ -858,101 +903,102 @@
                 </div>
             </div>
         </div>
+
+    <!-- Fee Category Breakdown -->
+    <div class="fee-breakdown-section">
+        <h2 class="section-title">
+            <i class="fas fa-chart-pie"></i> Fee Category Breakdown
+            <span style="font-size: 14px; color: #7f8c8d; margin-left: 10px; font-weight: normal;">
+                (Extracted from Member Invoices - Multiple Categories per Invoice)
+            </span>
+        </h2>
         
-        <!-- Fee Category Breakdown -->
-        <div class="fee-breakdown-section">
-            <h2 class="section-title">
-                <i class="fas fa-chart-pie"></i> Fee Category Breakdown
-                <span style="font-size: 14px; color: #7f8c8d; margin-left: 10px; font-weight: normal;">
-                    (Extracted from Member Invoices)
-                </span>
-            </h2>
-            
-            <div class="fee-category-tabs">
-                <div class="fee-tab active">
-                    All Fees <span class="badge">$49,490.00</span>
-                </div>
-                <div class="fee-tab">
-                    Monthly Support Fees <span class="badge">$32,150.00</span>
-                </div>
-                <div class="fee-tab">
-                    Membership Fees <span class="badge">$8,420.00</span>
-                </div>
-                <div class="fee-tab">
-                    Pet Purchase Fees <span class="badge">$6,580.00</span>
-                </div>
-                <div class="fee-tab">
-                    Products <span class="badge">$2,340.00</span>
-                </div>
+        <div class="fee-category-tabs">
+            <div class="fee-tab active">
+                All Fees <span class="badge">$49,490.00</span>
             </div>
-            
-            <div class="fee-category-chart">
-                <div class="fee-category-item support-fees">
-                    <div class="fee-category-info">
-                        <div class="fee-category-icon">
-                            <i class="fas fa-calendar-check"></i>
-                        </div>
-                        <div>
-                            <div class="fee-category-name">Monthly Support Fees</div>
-                            <div style="font-size: 12px; color: #7f8c8d;">Total of TLC Monthly Support Fees</div>
-                        </div>
-                    </div>
-                    <div class="fee-category-amount">$32,150.00</div>
-                </div>
-                
-                <div class="fee-category-item membership-fees">
-                    <div class="fee-category-info">
-                        <div class="fee-category-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div>
-                            <div class="fee-category-name">Membership Fees</div>
-                            <div style="font-size: 12px; color: #7f8c8d;">Total of One-time Membership Fees</div>
-                        </div>
-                    </div>
-                    <div class="fee-category-amount">$8,420.00</div>
-                </div>
-                
-                <div class="fee-category-item pet-purchase-fees">
-                    <div class="fee-category-info">
-                        <div class="fee-category-icon">
-                            <i class="fas fa-paw"></i>
-                        </div>
-                        <div>
-                            <div class="fee-category-name">Pet Purchase Fees</div>
-                            <div style="font-size: 12px; color: #7f8c8d;">Total of Fees Paid to Cancel</div>
-                        </div>
-                    </div>
-                    <div class="fee-category-amount">$6,580.00</div>
-                </div>
-                
-                <div class="fee-category-item products">
-                    <div class="fee-category-info">
-                        <div class="fee-category-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </div>
-                        <div>
-                            <div class="fee-category-name">Products</div>
-                            <div style="font-size: 12px; color: #7f8c8d;">Total of Flea Control, Off-Formulary Medications, Retail Items</div>
-                        </div>
-                    </div>
-                    <div class="fee-category-amount">$2,340.00</div>
-                </div>
+            <div class="fee-tab">
+                Monthly Support Fees <span class="badge">$38,650.00</span>
             </div>
-            
-            <div style="margin-top: 20px; padding: 15px; background-color: #f8fafc; border-radius: 8px; border-left: 4px solid #f39c12;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-lightbulb" style="color: #f39c12;"></i>
+            <div class="fee-tab">
+                Membership Fees <span class="badge">$9,520.00</span>
+            </div>
+            <div class="fee-tab">
+                Pet Purchase Fees <span class="badge">$8,080.00</span>
+            </div>
+            <div class="fee-tab">
+                Products <span class="badge">$2,340.00</span>
+            </div>
+        </div>
+        
+        <div class="fee-category-chart">
+            <div class="fee-category-item support-fees">
+                <div class="fee-category-info">
+                    <div class="fee-category-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
                     <div>
-                        <div style="font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Note for Jing</div>
-                        <div style="font-size: 14px; color: #5d6d7e;">
-                            Fee categories are extracted from line items on Member invoices. 
-                            <span style="font-weight: 600;">Implementation complexity: Medium</span> - requires linking payments to invoice line items.
-                        </div>
+                        <div class="fee-category-name">Monthly Support Fees</div>
+                        <div style="font-size: 12px; color: #7f8c8d;">Total of Recurring TLC Plan Fees</div>
+                    </div>
+                </div>
+                <div class="fee-category-amount">$38,650.00</div>
+            </div>
+            
+            <div class="fee-category-item membership-fees">
+                <div class="fee-category-info">
+                    <div class="fee-category-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div>
+                        <div class="fee-category-name">Membership Fees</div>
+                        <div style="font-size: 12px; color: #7f8c8d;">Total of One-time Membership Fees</div>
+                    </div>
+                </div>
+                <div class="fee-category-amount">$9,520.00</div>
+            </div>
+            
+            <div class="fee-category-item pet-purchase-fees">
+                <div class="fee-category-info">
+                    <div class="fee-category-icon">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <div>
+                        <div class="fee-category-name">Pet Purchase Fees</div>
+                        <div style="font-size: 12px; color: #7f8c8d;">Total Fees Paid at Cancellation</div>
+                    </div>
+                </div>
+                <div class="fee-category-amount">$8,080.00</div>
+            </div>
+        
+        <!-- ADDED PRODUCTS SECTION HERE -->
+            <div class="fee-category-item products">
+                <div class="fee-category-info">
+                    <div class="fee-category-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div>
+                        <div class="fee-category-name">Products</div>
+                        <div style="font-size: 12px; color: #7f8c8d;">Flea Control, Off-Formulary Medications, Retail Items, Other</div>
+                    </div>
+                </div>
+                <div class="fee-category-amount">$2,340.00</div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 20px; padding: 15px; background-color: #f8fafc; border-radius: 8px; border-left: 4px solid #f39c12;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-lightbulb" style="color: #f39c12;"></i>
+                <div>
+                    <div style="font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Multi-Category Invoice Analysis</div>
+                    <div style="font-size: 14px; color: #5d6d7e;">
+                        <strong>65% of invoices contain multiple fee categories.</strong> This requires payment allocation across line items. 
+                        Implementation complexity: <span style="font-weight: 600;">High</span> - requires line-item-level payment tracking.
                     </div>
                 </div>
             </div>
         </div>
+    </div>
         
         <!-- Filter Bar -->
         <div class="filter-bar">
@@ -964,6 +1010,7 @@
                     <option value="membership">Membership Fees</option>
                     <option value="purchase">Pet Purchase Fees</option>
                     <option value="products">Products</option>
+                    <option value="mixed">Mixed Categories</option>
                 </select>
             </div>
             
@@ -971,7 +1018,7 @@
                 <label class="filter-label">Payment Method</label>
                 <select class="filter-select">
                     <option value="all">All Methods</option>
-                    <option value="credit">Credit/Debit Card</option>
+                    <option value="credit">Debit/Credit Card</option>
                     <option value="cash">Cash</option>
                     <option value="check">Check</option>
                     <option value="bank">ACH/Bank Transfer</option>
@@ -983,11 +1030,10 @@
                 <select class="filter-select">
                     <option value="all">All Statuses</option>
                     <option value="paid">Paid</option>
-                    <option value="pending">Overdue</option>
-                    <option value="failed">Partial</option>
+                    <option value="pending">Partial</option>
+                     <option value="pending">Overdue</option>
                     <option value="refunded">Refunded</option>
                     <option value="failed">Failed</option>
-                    <option value="failed">Voided</option>
                 </select>
             </div>
             
@@ -1030,26 +1076,39 @@
                         <th>Date</th>
                         <th>Invoice #</th>
                         <th>Member Name</th>
-                        <th>Fee Category</th>
+                        <th>Fee Categories</th>
                         <th>Amount</th>
-                        <th>Payment Method</th>
+                        <th>Method</th>
                         <th>Status</th>
                         <th>Reference</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Example 1: Francesca Ferrucci - Monthly Support + Pet Purchase -->
                     <tr>
                         <td>Jan 15, 2026</td>
                         <td>
-                            <a href="#" style="color: #3498db; font-weight: 600;">INV-980654</a>
+                            <a href="#" class="view-invoice-btn" data-invoice="INV-980654" style="color: #3498db; font-weight: 600;">INV-980654</a>
                         </td>
                         <td>Francesca Ferrucci</td>
                         <td>
-                            <span style="display: inline-flex; align-items: center; gap: 5px;">
-                                <i class="fas fa-calendar-check" style="color: #51b5e0;"></i>
-                                Monthly Support
-                            </span>
+                            <div class="fee-categories-display">
+                                <div class="fee-category-chip support">
+                                    <i class="fas fa-calendar-check"></i> Monthly Support
+                                </div>
+                                <div class="fee-category-chip purchase">
+                                    <i class="fas fa-paw"></i> Pet Purchase
+                                </div>
+                                <div class="fee-amount-breakdown">
+                                    <span class="fee-breakdown-item">
+                                        <span style="color: #2980b9;">$144.00</span> Support
+                                    </span>
+                                    <span class="fee-breakdown-item">
+                                        <span style="color: #d35400;">$100.00</span> Purchase
+                                    </span>
+                                </div>
+                            </div>
                         </td>
                         <td style="font-weight: 700;">$244.00</td>
                         <td><span class="method-badge method-credit">Credit Card</span></td>
@@ -1061,36 +1120,53 @@
                                     Actions <i class="fas fa-chevron-down"></i>
                                 </button>
                                 <div class="actions-menu">
-                                    <div class="action-item view">
-                                        <i class="fas fa-eye"></i> View
+                                    <div class="action-item view view-payment-btn" data-payment-id="1">
+                                        <i class="fas fa-eye"></i> View Details
                                     </div>
                                     <div class="action-item paynow">
                                         <i class="fas fa-credit-card"></i> Pay Now
                                     </div>
                                     <div class="action-item schedulepayment">
                                         <i class="fas fa-calendar-check"></i> Schedule Payment
-                                     <div class="action-item paymentplan">
-                                        <i class="fas fa-file-invoice-dollar"></i> Payment Plan   
+                                    </div>
+                                    <div class="action-item paymentplan">
+                                        <i class="fas fa-calendar-check"></i> Payment Plan
+                                    </div>
+                                    <div class="action-item refund">
+                                        <i class="fas fa-undo-alt"></i> Refund
                                     </div>
                                 </div>
                             </div>
                         </td>
                     </tr>
                     
+                    <!-- Example 2: John Smith - Membership + Monthly Support -->
                     <tr>
                         <td>Jan 14, 2026</td>
                         <td>
-                            <a href="#" style="color: #3498db; font-weight: 600;">INV-980653</a>
+                            <a href="#" class="view-invoice-btn" data-invoice="INV-980653" style="color: #3498db; font-weight: 600;">INV-980653</a>
                         </td>
                         <td>John Smith</td>
                         <td>
-                            <span style="display: inline-flex; align-items: center; gap: 5px;">
-                                <i class="fas fa-users" style="color: #1eb53a;"></i>
-                                Membership
-                            </span>
+                            <div class="fee-categories-display">
+                                <div class="fee-category-chip membership">
+                                    <i class="fas fa-users"></i> Membership
+                                </div>
+                                <div class="fee-category-chip support">
+                                    <i class="fas fa-calendar-check"></i> Monthly Support
+                                </div>
+                                <div class="fee-amount-breakdown">
+                                    <span class="fee-breakdown-item">
+                                        <span style="color: #27ae60;">$39.00</span> Membership
+                                    </span>
+                                    <span class="fee-breakdown-item">
+                                        <span style="color: #2980b9;">$50.00</span> Support
+                                    </span>
+                                </div>
+                            </div>
                         </td>
                         <td style="font-weight: 700;">$89.00</td>
-                        <td><span class="method-badge method-bank">ACH/Bank Transfer</span></td>
+                        <td><span class="method-badge method-bank">Bank Transfer</span></td>
                         <td><span class="status-badge status-paid">Paid</span></td>
                         <td>TXN-789455</td>
                         <td>
@@ -1099,59 +1175,46 @@
                                     Actions <i class="fas fa-chevron-down"></i>
                                 </button>
                                 <div class="actions-menu">
-                                 <div class="action-item view">
-                                        <i class="fas fa-eye"></i> View
+                                    <div class="action-item view view-payment-btn" data-payment-id="2">
+                                        <i class="fas fa-eye"></i> View Details
                                     </div>
                                     <div class="action-item paynow">
                                         <i class="fas fa-credit-card"></i> Pay Now
                                     </div>
                                     <div class="action-item schedulepayment">
                                         <i class="fas fa-calendar-check"></i> Schedule Payment
-                                     <div class="action-item paymentplan">
-                                        <i class="fas fa-file-invoice-dollar"></i> Payment Plan   
+                                    </div>
+                                    <div class="action-item paymentplan">
+                                        <i class="fas fa-calendar-check"></i> Payment Plan
+                                    </div>
+                                    <div class="action-item refund">
+                                        <i class="fas fa-undo-alt"></i> Refund
                                     </div>
                                 </div>
                             </div>
                         </td>
                     </tr>
                     
+                    <!-- Example 3: Maria Garcia - Monthly Support Only -->
                     <tr>
                         <td>Jan 14, 2026</td>
                         <td>
-                            <a href="#" style="color: #3498db; font-weight: 600;">INV-980652</a>
+                            <a href="#" class="view-invoice-btn" data-invoice="INV-980652" style="color: #3498db; font-weight: 600;">INV-980652</a>
                         </td>
                         <td>Maria Garcia</td>
                         <td>
-                            <span style="display: inline-flex; align-items: center; gap: 5px;">
-                                <i class="fas fa-paw" style="color: #ff6308;"></i>
-                                Pet Purchase
-                            </span>
-                        </td>
-                        <td style="font-weight: 700;">$450.00</td>
-                        <td><span class="method-badge method-credit">Credit Card</span></td>
-                        <td><span class="status-badge status-refunded">Refunded</span></td>
-                        <td>TXN-789454</td>
-                        <td>
-                            <div class="actions-dropdown">
-                                <button class="actions-btn">
-                                    Actions <i class="fas fa-chevron-down"></i>
-                                </button>
-                                <div class="actions-menu">
-                                    <div class="action-item view">
-                                        <i class="fas fa-eye"></i> View
-                                    </div>
-                                    <div class="action-item paynow">
-                                        <i class="fas fa-credit-card"></i> Pay Now
-                                    </div>
-                                    <div class="action-item schedulepayment">
-                                        <i class="fas fa-calendar-check"></i> Schedule Payment
-                                     <div class="action-item paymentplan">
-                                        <i class="fas fa-file-invoice-dollar"></i> Payment Plan
-                                    </div>
+                            <div class="fee-categories-display">
+                                <div class="fee-category-chip support">
+                                    <i class="fas fa-calendar-check"></i> Monthly Support
+                                </div>
+                                <div class="fee-amount-breakdown">
+                                    <span class="fee-breakdown-item">
+                                        <span style="color: #2980b9;">$450.00</span> Support
+                                    </span>
                                 </div>
                             </div>
                         </td>
-                    <td style="font-weight: 700;">$450.00</td>
+                        <td style="font-weight: 700;">$450.00</td>
                         <td><span class="method-badge method-credit">Credit Card</span></td>
                         <td><span class="status-badge status-refunded">Refunded</span></td>
                         <td>TXN-789454</td>
@@ -1164,8 +1227,14 @@
                                     <div class="action-item view view-payment-btn" data-payment-id="3">
                                         <i class="fas fa-eye"></i> View Details
                                     </div>
-                                    <div class="action-item edit">
-                                        <i class="fas fa-edit"></i> Edit
+                                    <div class="action-item paynow">
+                                        <i class="fas fa-credit-card"></i> Pay Now
+                                    </div>
+                                    <div class="action-item schedulepayment">
+                                        <i class="fas fa-calendar-check"></i> Schedule Payment
+                                    </div>
+                                    <div class="action-item paymentplan">
+                                        <i class="fas fa-calendar-check"></i> Payment Plan
                                     </div>
                                     <div class="action-item refund">
                                         <i class="fas fa-undo-alt"></i> Refund
@@ -1207,8 +1276,14 @@
                                     <div class="action-item view view-payment-btn" data-payment-id="4">
                                         <i class="fas fa-eye"></i> View Details
                                     </div>
-                                    <div class="action-item edit">
-                                        <i class="fas fa-edit"></i> Edit
+                                    <div class="action-item paynow">
+                                        <i class="fas fa-credit-card"></i> Pay Now
+                                    </div>
+                                    <div class="action-item schedulepayment">
+                                        <i class="fas fa-calendar-check"></i> Schedule Payment
+                                    </div>
+                                    <div class="action-item paymentplan">
+                                        <i class="fas fa-calendar-check"></i> Payment Plan
                                     </div>
                                     <div class="action-item refund">
                                         <i class="fas fa-undo-alt"></i> Refund
@@ -1262,8 +1337,14 @@
                                     <div class="action-item view view-payment-btn" data-payment-id="5">
                                         <i class="fas fa-eye"></i> View Details
                                     </div>
-                                    <div class="action-item edit">
-                                        <i class="fas fa-edit"></i> Edit
+                                    <div class="action-item paynow">
+                                        <i class="fas fa-credit-card"></i> Pay Now
+                                    </div>
+                                    <div class="action-item schedulepayment">
+                                        <i class="fas fa-calendar-check"></i> Schedule Payment
+                                    </div>
+                                    <div class="action-item paymentplan">
+                                        <i class="fas fa-calendar-check"></i> Payment Plan
                                     </div>
                                     <div class="action-item refund">
                                         <i class="fas fa-undo-alt"></i> Refund
@@ -1594,5 +1675,4 @@
     </script>
 </body>
 </html>
-
                     
