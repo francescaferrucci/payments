@@ -1127,7 +1127,507 @@
                             <a href="#" class="view-invoice-btn" data-invoice="INV-980653" style="color: #3498db; font-weight: 600;">INV-980653</a>
                         </td>
                         <td>John Smith</td>
+                       <td>
+                            <div class="fee-categories-display">
+                                <div class="fee-category-chip membership">
+                                    <i class="fas fa-users"></i> Membership
+                                </div>
+                                <div class="fee-category-chip support">
+                                    <i class="fas fa-calendar-check"></i> Monthly Support
+                                </div>
+                                <div class="fee-amount-breakdown">
+                                    <span class="fee-breakdown-item">
+                                        <span style="color: #27ae60;">$39.00</span> Membership
+                                    </span>
+                                    <span class="fee-breakdown-item">
+                                        <span style="color: #2980b9;">$50.00</span> Support
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="font-weight: 700;">$89.00</td>
+                        <td><span class="method-badge method-bank">Bank Transfer</span></td>
+                        <td><span class="status-badge status-paid">Paid</span></td>
+                        <td>TXN-789455</td>
+                        <td>
+                            <div class="actions-dropdown">
+                                <button class="actions-btn">
+                                    Actions <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="actions-menu">
+                                    <div class="action-item view view-payment-btn" data-payment-id="2">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </div>
+                                    <div class="action-item edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </div>
+                                    <div class="action-item refund">
+                                        <i class="fas fa-undo-alt"></i> Refund
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Example 3: Maria Garcia - Monthly Support Only -->
+                    <tr>
+                        <td>Jan 14, 2026</td>
+                        <td>
+                            <a href="#" class="view-invoice-btn" data-invoice="INV-980652" style="color: #3498db; font-weight: 600;">INV-980652</a>
+                        </td>
+                        <td>Maria Garcia</td>
+                        <td>
+                            <div class="fee-categories-display">
+                                <div class="fee-category-chip support">
+                                    <i class="fas fa-calendar-check"></i> Monthly Support
+                                </div>
+                                <div class="fee-amount-breakdown">
+                                    <span class="fee-breakdown-item">
+                                        <span style="color: #2980b9;">$450.00</span> Support
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="font-weight: 700;">$450.00</td>
+                        <td><span class="method-badge method-credit">Credit Card</span></td>
+                        <td><span class="status-badge status-refunded">Refunded</span></td>
+                        <td>TXN-789454</td>
+                        <td>
+                            <div class="actions-dropdown">
+                                <button class="actions-btn">
+                                    Actions <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="actions-menu">
+                                    <div class="action-item view view-payment-btn" data-payment-id="3">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </div>
+                                    <div class="action-item edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </div>
+                                    <div class="action-item refund">
+                                        <i class="fas fa-undo-alt"></i> Refund
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Example 4: Robert Chen - Monthly Support Only -->
+                    <tr>
+                        <td>Jan 13, 2026</td>
+                        <td>
+                            <a href="#" class="view-invoice-btn" data-invoice="INV-980651" style="color: #3498db; font-weight: 600;">INV-980651</a>
+                        </td>
+                        <td>Robert Chen</td>
+                        <td>
+                            <div class="fee-categories-display">
+                                <div class="fee-category-chip support">
+                                    <i class="fas fa-calendar-check"></i> Monthly Support
+                                </div>
+                                <div class="fee-amount-breakdown">
+                                    <span class="fee-breakdown-item">
+                                        <span style="color: #2980b9;">$187.50</span> Support (2 pets)
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="font-weight: 700;">$187.50</td>
+                        <td><span class="method-badge method-credit">Credit Card</span></td>
+                        <td><span class="status-badge status-paid">Paid</span></td>
+                        <td>TXN-789453</td>
+                        <td>
+                            <div class="actions-dropdown">
+                                <button class="actions-btn">
+                                    Actions <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="actions-menu">
+                                    <div class="action-item view view-payment-btn" data-payment-id="4">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </div>
+                                    <div class="action-item edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </div>
+                                    <div class="action-item refund">
+                                        <i class="fas fa-undo-alt"></i> Refund
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Example 5: Sarah Johnson - All Three Categories -->
+                    <tr>
+                        <td>Jan 12, 2026</td>
+                        <td>
+                            <a href="#" class="view-invoice-btn" data-invoice="INV-980650" style="color: #3498db; font-weight: 600;">INV-980650</a>
+                        </td>
+                        <td>Sarah Johnson</td>
                         <td>
                             <div class="fee-categories-display">
                                 <div class="fee-category-chip membership">
-                                    <i class
+                                    <i class="fas fa-users"></i> Membership
+                                </div>
+                                <div class="fee-category-chip support">
+                                    <i class="fas fa-calendar-check"></i> Monthly Support
+                                </div>
+                                <div class="fee-category-chip purchase">
+                                    <i class="fas fa-paw"></i> Pet Purchase
+                                </div>
+                                <div class="fee-amount-breakdown">
+                                    <span class="fee-breakdown-item">
+                                        <span style="color: #27ae60;">$75.00</span> Membership
+                                    </span>
+                                    <span class="fee-breakdown-item">
+                                        <span style="color: #2980b9;">$120.00</span> Support
+                                    </span>
+                                    <span class="fee-breakdown-item">
+                                        <span style="color: #d35400;">$250.00</span> Purchase
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="font-weight: 700;">$445.00</td>
+                        <td><span class="method-badge method-debit">Debit Card</span></td>
+                        <td><span class="status-badge status-paid">Paid</span></td>
+                        <td>TXN-789452</td>
+                        <td>
+                            <div class="actions-dropdown">
+                                <button class="actions-btn">
+                                    Actions <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="actions-menu">
+                                    <div class="action-item view view-payment-btn" data-payment-id="5">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </div>
+                                    <div class="action-item edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </div>
+                                    <div class="action-item refund">
+                                        <i class="fas fa-undo-alt"></i> Refund
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination">
+            <div class="pagination-info">Showing 1-5 of 24 payments</div>
+            <div class="pagination-controls">
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn">4</button>
+                <button class="pagination-btn">5</button>
+                <button class="pagination-btn">Next</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Payment Details Modal -->
+    <div class="payment-details-modal" id="paymentDetailsModal">
+        <div class="payment-details-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Payment Details</h2>
+                <button class="close-modal" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Dynamic content will be inserted here -->
+                <div id="modalContent">
+                    <!-- Content will be loaded via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Payment data for the modal
+        const paymentDetails = {
+            1: {
+                invoiceNumber: "INV-980654",
+                memberName: "Francesca Ferrucci",
+                date: "Jan 15, 2026",
+                amount: "$244.00",
+                method: "Credit Card",
+                status: "Paid",
+                reference: "TXN-789456",
+                categories: "Monthly Support + Pet Purchase",
+                lineItems: [
+                    { description: "Total Lifetime Care™ Plan - Carlotta", category: "Monthly Support", amount: "$97.00" },
+                    { description: "Total Lifetime Care™ Plan - Teddy", category: "Monthly Support", amount: "$47.00" },
+                    { description: "Pet Adoption Fee - New Puppy", category: "Pet Purchase", amount: "$100.00" }
+                ],
+                notes: "Member enrolled two existing pets and adopted a new puppy."
+            },
+            2: {
+                invoiceNumber: "INV-980653",
+                memberName: "John Smith",
+                date: "Jan 14, 2026",
+                amount: "$89.00",
+                method: "Bank Transfer",
+                status: "Paid",
+                reference: "TXN-789455",
+                categories: "Membership + Monthly Support",
+                lineItems: [
+                    { description: "Annual Membership Renewal", category: "Membership", amount: "$39.00" },
+                    { description: "Total Lifetime Care™ Plan - Max", category: "Monthly Support", amount: "$50.00" }
+                ],
+                notes: "Standard annual renewal with monthly plan."
+            },
+            3: {
+                invoiceNumber: "INV-980652",
+                memberName: "Maria Garcia",
+                date: "Jan 14, 2026",
+                amount: "$450.00",
+                method: "Credit Card",
+                status: "Refunded",
+                reference: "TXN-789454",
+                categories: "Monthly Support",
+                lineItems: [
+                    { description: "Total Lifetime Care™ Plan - Luna", category: "Monthly Support", amount: "$97.39" },
+                    { description: "Total Lifetime Care™ Plan - Bella", category: "Monthly Support", amount: "$105.59" },
+                    { description: "Total Lifetime Care™ Plan - Charlie", category: "Monthly Support", amount: "$97.39" },
+                    { description: "Total Lifetime Care™ Plan - Rocky", category: "Monthly Support", amount: "$105.59" },
+                    { description: "Total Lifetime Care™ Plan - Daisy", category: "Monthly Support", amount: "$44.04" }
+                ],
+                notes: "Refund issued due to overpayment. Member has 5 pets on plan."
+            },
+            4: {
+                invoiceNumber: "INV-980651",
+                memberName: "Robert Chen",
+                date: "Jan 13, 2026",
+                amount: "$187.50",
+                method: "Credit Card",
+                status: "Paid",
+                reference: "TXN-789453",
+                categories: "Monthly Support",
+                lineItems: [
+                    { description: "Total Lifetime Care™ Plan - Coco", category: "Monthly Support", amount: "$97.50" },
+                    { description: "Total Lifetime Care™ Plan - Milo", category: "Monthly Support", amount: "$90.00" }
+                ],
+                notes: "Two pets on standard monthly plans."
+            },
+            5: {
+                invoiceNumber: "INV-980650",
+                memberName: "Sarah Johnson",
+                date: "Jan 12, 2026",
+                amount: "$445.00",
+                method: "Debit Card",
+                status: "Paid",
+                reference: "TXN-789452",
+                categories: "Membership + Monthly Support + Pet Purchase",
+                lineItems: [
+                    { description: "New Member Enrollment", category: "Membership", amount: "$75.00" },
+                    { description: "Total Lifetime Care™ Plan - Buddy", category: "Monthly Support", amount: "$120.00" },
+                    { description: "Pet Transfer Fee - Golden Retriever", category: "Pet Purchase", amount: "$250.00" }
+                ],
+                notes: "New member with pet transfer from another clinic."
+            }
+        };
+        
+        // DOM Elements
+        const modal = document.getElementById('paymentDetailsModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modalContent = document.getElementById('modalContent');
+        
+        // View Payment Details buttons
+        document.querySelectorAll('.view-payment-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const paymentId = this.dataset.paymentId;
+                showPaymentDetails(paymentId);
+            });
+        });
+        
+        // View Invoice buttons
+        document.querySelectorAll('.view-invoice-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const invoiceNumber = this.dataset.invoice;
+                // In a real app, this would navigate to the invoice
+                alert(`Would navigate to invoice: ${invoiceNumber}`);
+            });
+        });
+        
+        // Close modal
+        closeModalBtn.addEventListener('click', closeModal);
+        
+        // Close modal when clicking outside
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                closeModal();
+            }
+        });
+        
+        // Show payment details
+        function showPaymentDetails(paymentId) {
+            const payment = paymentDetails[paymentId];
+            
+            if (!payment) return;
+            
+            // Generate line items HTML
+            let lineItemsHtml = '';
+            payment.lineItems.forEach(item => {
+                let categoryClass = '';
+                if (item.category.includes('Support')) categoryClass = 'support';
+                if (item.category.includes('Membership')) categoryClass = 'membership';
+                if (item.category.includes('Purchase')) categoryClass = 'purchase';
+                
+                lineItemsHtml += `
+                    <tr>
+                        <td>${item.description}</td>
+                        <td>
+                            <span class="fee-category-chip ${categoryClass}" style="font-size: 11px; padding: 3px 8px;">
+                                ${item.category}
+                            </span>
+                        </td>
+                        <td style="text-align: right; font-weight: 600;">${item.amount}</td>
+                    </tr>
+                `;
+            });
+            
+            // Set modal content
+            modalContent.innerHTML = `
+                <div class="detail-grid">
+                    <div class="detail-card">
+                        <div class="detail-label">Invoice Number</div>
+                        <div class="detail-value">${payment.invoiceNumber}</div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-label">Member Name</div>
+                        <div class="detail-value">${payment.memberName}</div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-label">Payment Date</div>
+                        <div class="detail-value">${payment.date}</div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-label">Payment Amount</div>
+                        <div class="detail-value" style="font-size: 24px; font-weight: 700; color: #27ae60;">${payment.amount}</div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-label">Payment Method</div>
+                        <div class="detail-value">
+                            <span class="method-badge method-${payment.method.toLowerCase().includes('credit') ? 'credit' : payment.method.toLowerCase().includes('bank') ? 'bank' : 'credit'}">
+                                ${payment.method}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-label">Status</div>
+                        <div class="detail-value">
+                            <span class="status-badge status-${payment.status.toLowerCase()}">
+                                ${payment.status}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-label">Transaction Reference</div>
+                        <div class="detail-value">${payment.reference}</div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-label">Fee Categories</div>
+                        <div class="detail-value">${payment.categories}</div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 30px; margin-bottom: 15px; color: #2c3e50;">Invoice Line Items</h3>
+                <table class="line-items-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th style="text-align: right;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${lineItemsHtml}
+                        <tr style="border-top: 2px solid #2c3e50;">
+                            <td colspan="2" style="text-align: right; font-weight: 700;">Total:</td>
+                            <td style="text-align: right; font-weight: 700; font-size: 16px;">${payment.amount}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                ${payment.notes ? `
+                    <div style="margin-top: 25px; padding: 15px; background-color: #f8fafc; border-radius: 8px; border-left: 4px solid #3498db;">
+                        <div class="detail-label">Notes</div>
+                        <div class="detail-value">${payment.notes}</div>
+                    </div>
+                ` : ''}
+                
+                <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: flex-end;">
+                    <button class="clear-filters-btn" onclick="closeModal()">Close</button>
+                    <button class="apply-filters-btn">
+                        <i class="fas fa-print"></i> Print Receipt
+                    </button>
+                </div>
+            `;
+            
+            // Show modal
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close modal function
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Initialize filter functionality
+        document.querySelector('.apply-filters-btn').addEventListener('click', function() {
+            alert('Filters applied! In a real app, this would filter the payment data.');
+        });
+        
+        document.querySelector('.clear-filters-btn').addEventListener('click', function() {
+            // Reset all filter inputs
+            document.querySelectorAll('.filter-select').forEach(select => {
+                select.value = 'all';
+            });
+            document.querySelectorAll('.date-input').forEach((input, index) => {
+                input.value = index === 0 ? '2026-01-01' : '2026-01-31';
+            });
+            alert('All filters cleared!');
+        });
+        
+        // Initialize tab functionality
+        document.querySelectorAll('.fee-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.fee-tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // In a real app, this would filter the data by category
+                const category = this.textContent.split(' ')[0];
+                alert(`Filtering by: ${category} fees`);
+            });
+        });
+        
+        // Initialize pagination
+        document.querySelectorAll('.pagination-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (!this.textContent.includes('Next')) {
+                    document.querySelectorAll('.pagination-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    alert(`Loading page ${this.textContent}`);
+                } else {
+                    alert('Loading next page');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
